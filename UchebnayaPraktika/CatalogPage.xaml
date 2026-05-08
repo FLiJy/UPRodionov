@@ -1,0 +1,124 @@
+﻿<Page x:Class="UchebnayaPraktika.CatalogPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      Title="Каталог книг">
+
+    <Grid Margin="15">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <!-- Панель поиска и фильтров -->
+            <RowDefinition Height="*"/>
+            <!-- Сетка книг -->
+        </Grid.RowDefinitions>
+
+        <!-- Верхняя панель: Поиск, Сортировка, Фильтрация -->
+        <WrapPanel Grid.Row="0" Margin="0,0,0,15" VerticalAlignment="Center">
+
+            <!-- Поиск -->
+            <StackPanel Margin="0,0,15,10">
+                <TextBlock Text="Поиск (название или автор):" Foreground="Gray" Margin="0,0,0,5"/>
+                <TextBox x:Name="TbSearch" Width="250" Height="25" TextChanged="TbSearch_TextChanged"/>
+            </StackPanel>
+
+            <!-- Жанры -->
+            <StackPanel Margin="0,0,15,10">
+                <TextBlock Text="Жанр:" Foreground="Gray" Margin="0,0,0,5"/>
+                <ComboBox x:Name="CbGenres" Width="150" Height="25" SelectionChanged="Filter_SelectionChanged" DisplayMemberPath="Name"/>
+            </StackPanel>
+
+            <!-- Сортировка -->
+            <StackPanel Margin="0,0,15,10">
+                <TextBlock Text="Сортировка:" Foreground="Gray" Margin="0,0,0,5"/>
+                <ComboBox x:Name="CbSort" Width="180" Height="25" SelectionChanged="Filter_SelectionChanged">
+                    <ComboBoxItem Content="По названию (А-Я)" IsSelected="True"/>
+                    <ComboBoxItem Content="По названию (Я-А)"/>
+                    <ComboBoxItem Content="Сначала с высокой оценкой"/>
+                    <ComboBoxItem Content="Сначала с низкой оценкой"/>
+                </ComboBox>
+            </StackPanel>
+
+        </WrapPanel>
+
+        <!-- Сетка книг -->
+        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+            <ListView x:Name="LvBooks" BorderThickness="0" Background="Transparent" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+
+                <!-- Задаем отображение сеткой -->
+                <ListView.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel Orientation="Horizontal" HorizontalAlignment="Left"/>
+                    </ItemsPanelTemplate>
+                </ListView.ItemsPanel>
+
+                <!-- Внешний вид одной карточки книги -->
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <Border Width="200" Height="330" Margin="10" Background="White" CornerRadius="8" 
+                                BorderBrush="#E0E0E0" BorderThickness="1">
+                            <Border.Effect>
+                                <DropShadowEffect Color="Black" Opacity="0.1" BlurRadius="5" ShadowDepth="1"/>
+                            </Border.Effect>
+
+                            <Grid Margin="10">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="150"/>
+                                    <!-- Обложка -->
+                                    <RowDefinition Height="*"/>
+                                    <!-- Инфа -->
+                                    <RowDefinition Height="Auto"/>
+                                    <!-- Кнопки -->
+                                </Grid.RowDefinitions>
+
+                                <!-- Заглушка для обложки (если нет CoverPath) -->
+                                <Border Background="#ECECEC" CornerRadius="4">
+                                    <!-- Если в БД будут пути к картинкам, можно привязать Source="{Binding CoverPath}" -->
+                                    <TextBlock Text="Нет обложки" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="Gray"/>
+                                </Border>
+
+                                <StackPanel Grid.Row="1" Margin="0,10,0,0">
+                                    <TextBlock Text="{Binding Title}" FontWeight="Bold" FontSize="14" TextWrapping="Wrap" MaxHeight="40" TextTrimming="CharacterEllipsis"/>
+                                    <!-- В Entity Framework связь с таблицей Users скорее всего назовется User или User1. Подставьте правильное имя навигационного свойства -->
+                                    <TextBlock Text="{Binding Users.DisplayName}" Foreground="DimGray" Margin="0,5,0,0" FontStyle="Italic"/>
+
+                                    <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
+                                        <TextBlock Text="⭐ " Foreground="Gold"/>
+                                        <!-- Оценка будет рассчитываться в коде или через свойство, пока выводим текст -->
+                                        <TextBlock Text="{Binding AverageRating, StringFormat={}{0:F1}}" Foreground="Black"/>
+                                    </StackPanel>
+                                </StackPanel>
+
+                                <StackPanel Grid.Row="2" Margin="0,10,0,0">
+                                    <!-- Выбор списка для добавления -->
+                                    <ComboBox SelectedIndex="0" Margin="0,0,0,5" SelectionChanged="CbAddToList_SelectionChanged" Tag="{Binding Id}">
+                                        <ComboBoxItem Content="В список..." IsEnabled="False"/>
+                                        <ComboBoxItem Content="В планах"/>
+                                        <ComboBoxItem Content="Читаю"/>
+                                        <ComboBoxItem Content="Прочитано"/>
+                                        <ComboBoxItem Content="Заброшено"/>
+                                    </ComboBox>
+
+                                    <Button Content="Открыть книгу" Height="25" Click="BtnOpenBook_Click" Tag="{Binding Id}"/>
+                                </StackPanel>
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+
+                <!-- Убираем стандартное выделение ListView -->
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="ListViewItem">
+                        <Setter Property="Focusable" Value="False"/>
+                        <Setter Property="Background" Value="Transparent"/>
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="ListViewItem">
+                                    <ContentPresenter/>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </ListView.ItemContainerStyle>
+            </ListView>
+        </ScrollViewer>
+    </Grid>
+</Page>

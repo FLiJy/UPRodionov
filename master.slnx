@@ -1,3 +1,4 @@
 <Solution>
   <Project Path="master/master.csproj" />
+  <Project Path="UchebnayaPraktika/UchebnayaPraktika.csproj" />
 </Solution>
