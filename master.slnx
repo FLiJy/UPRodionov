@@ -1,4 +1,4 @@
 <Solution>
-  <Project Path="master/master.csproj" />
-  <Project Path="UchebnayaPraktika/UchebnayaPraktika.csproj" />
+  <Project Path="master/master.csproj" Id="472c78c3-0abf-441f-9564-9290942e2430" />
+  <Project Path="UchebnayaPraktika/UchebnayaPraktika.csproj" Id="2e872953-71bf-443b-9476-a8be38035ace" />
 </Solution>

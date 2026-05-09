@@ -1,0 +1,58 @@
+﻿<Page x:Class="UchebnayaPraktika.AuthorPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:local="clr-namespace:UchebnayaPraktika" 
+      Title="AuthorPage">
+
+    <Page.Resources>
+        <local:FreezeConverter x:Key="FreezeConverter"/>
+        <local:FreezeColorConverter x:Key="FreezeColorConverter"/>
+        <local:VisibilityConverter x:Key="VisibilityConverter"/>
+    </Page.Resources>
+
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="0,0,0,20">
+            <TextBlock Text="Мои произведения" FontSize="24" FontWeight="Bold" VerticalAlignment="Center"/>
+            <Button Content="+ Опубликовать книгу" Margin="20,0,0,0" Padding="15,5" 
+                    Background="#2E8B57" Foreground="White" Click="BtnAddBook_Click"/>
+        </StackPanel>
+
+        <DataGrid x:Name="DgAuthorBooks" Grid.Row="1" AutoGenerateColumns="False" 
+                  IsReadOnly="True" GridLinesVisibility="None" Background="White">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Название" Binding="{Binding Title}" Width="*"/>
+
+                <DataGridTextColumn Header="Отзывов" Binding="{Binding Reviews.Count}" Width="80"/>
+
+                <DataGridTemplateColumn Header="Статус" Width="130">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding IsFrozen, Converter={StaticResource FreezeConverter}}" 
+                                       Foreground="{Binding IsFrozen, Converter={StaticResource FreezeColorConverter}}"
+                                       FontWeight="Medium"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
+                <DataGridTemplateColumn Width="250">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <Button Content="Редактировать" Margin="5,2" Width="100" Click="BtnEdit_Click" Tag="{Binding}"/>
+
+                                <Button Content="Оспорить" Margin="5,2" Width="80" 
+                                        Visibility="{Binding IsFrozen, Converter={StaticResource VisibilityConverter}}" 
+                                        Click="BtnAppealBook_Click" Tag="{Binding}" Background="GhostWhite"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</Page>

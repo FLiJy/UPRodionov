@@ -1,0 +1,93 @@
+﻿<Page x:Class="UchebnayaPraktika.ListsPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      Title="Мои списки книг">
+
+    <Grid Margin="15">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <WrapPanel Grid.Row="0" Margin="0,0,0,10">
+            <StackPanel Margin="0,0,15,5">
+                <TextBlock Text="Поиск в моих списках:" Foreground="Gray" FontSize="11"/>
+                <TextBox x:Name="TbSearch" Width="200" Height="22" TextChanged="FilterChanged"/>
+            </StackPanel>
+            <StackPanel Margin="0,0,15,5">
+                <TextBlock Text="Сортировка:" Foreground="Gray" FontSize="11"/>
+                <ComboBox x:Name="CbSort" Width="150" Height="22" SelectionChanged="FilterChanged">
+                    <ComboBoxItem Content="По названию" IsSelected="True"/>
+                    <ComboBoxItem Content="По оценке"/>
+                </ComboBox>
+            </StackPanel>
+        </WrapPanel>
+
+        <ListBox x:Name="LbStatusFilter" Grid.Row="1" Margin="0,0,0,15" 
+                 BorderThickness="0" Background="Transparent"
+                 SelectionChanged="FilterChanged">
+            <ListBox.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <StackPanel Orientation="Horizontal"/>
+                </ItemsPanelTemplate>
+            </ListBox.ItemsPanel>
+            <ListBox.ItemContainerStyle>
+                <Style TargetType="ListBoxItem">
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="ListBoxItem">
+                                <Border x:Name="Border" Padding="15,8" Margin="0,0,5,0" CornerRadius="15" Background="#EEE">
+                                    <ContentPresenter/>
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsSelected" Value="True">
+                                        <Setter TargetName="Border" Property="Background" Value="#2D2D30"/>
+                                        <Setter Property="Foreground" Value="White"/>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </ListBox.ItemContainerStyle>
+
+            <ListBoxItem Content="Читаю" Tag="Reading" IsSelected="True"/>
+            <ListBoxItem Content="В планах" Tag="Planned"/>
+            <ListBoxItem Content="Прочитано" Tag="Completed"/>
+            <ListBoxItem Content="Заброшено" Tag="Dropped"/>
+        </ListBox>
+
+        <ScrollViewer Grid.Row="2" VerticalScrollBarVisibility="Auto">
+            <ListView x:Name="LvMyBooks" BorderThickness="0" Background="Transparent">
+                <ListView.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel Orientation="Horizontal"/>
+                    </ItemsPanelTemplate>
+                </ListView.ItemsPanel>
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <Border Width="180" Margin="10" Background="White" CornerRadius="8" BorderBrush="#DDD" BorderThickness="1">
+                            <StackPanel Margin="10">
+                                <Border Height="120" Background="#F0F0F0" CornerRadius="4" Margin="0,0,0,10">
+                                    <TextBlock Text="Обложка" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="Silver"/>
+                                </Border>
+                                <TextBlock Text="{Binding Title}" FontWeight="Bold" TextWrapping="Wrap" Height="40"/>
+
+                                <TextBlock Text="Сменить статус:" FontSize="10" Foreground="Gray" Margin="0,10,0,2"/>
+                                <ComboBox SelectedIndex="0" Height="22" Tag="{Binding Id}" SelectionChanged="CbChangeStatus_SelectionChanged">
+                                    <ComboBoxItem Content="Переместить..." IsEnabled="False"/>
+                                    <ComboBoxItem Content="Читаю"/>
+                                    <ComboBoxItem Content="В планах"/>
+                                    <ComboBoxItem Content="Прочитано"/>
+                                    <ComboBoxItem Content="Заброшено"/>
+                                    <ComboBoxItem Content="Удалить из списка" Foreground="Red"/>
+                                </ComboBox>
+                            </StackPanel>
+                        </Border>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </ScrollViewer>
+    </Grid>
+</Page>
