@@ -16,6 +16,14 @@ namespace UchebnayaPraktika
 
         private void UpdateList()
         {
+            if (LbStatusFilter == null)
+            {
+                return;
+            }
+            if (LbStatusFilter == null || LvMyBooks == null)
+            {
+                return;
+            }
             if (Core.CurrentUser == null) return;
 
             string selectedStatus = (LbStatusFilter.SelectedItem as ListBoxItem)?.Tag.ToString();
