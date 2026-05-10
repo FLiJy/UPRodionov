@@ -4,13 +4,15 @@ using System.Windows;
 using System.Windows.Data;
 using System.Windows.Media;
 
-namespace UchebnayaPraktika // Проверьте это имя!
+namespace UchebnayaPraktika.Converters // <-- Добавили .Converters
 {
     public class FreezeConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return (value is bool isFrozen && isFrozen) ? "❄ Заморожена" : "✅ Активна";
+            if (value is bool isFrozen)
+                return isFrozen ? "❄ Заморожена" : "✅ Активна";
+            return "Неизвестно";
         }
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) => null;
     }
@@ -19,7 +21,9 @@ namespace UchebnayaPraktika // Проверьте это имя!
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return (value is bool isFrozen && isFrozen) ? Brushes.IndianRed : Brushes.DarkGreen;
+            if (value is bool isFrozen)
+                return isFrozen ? Brushes.IndianRed : Brushes.DarkGreen;
+            return Brushes.Black;
         }
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) => null;
     }
@@ -28,8 +32,23 @@ namespace UchebnayaPraktika // Проверьте это имя!
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return (value is bool isVisible && isVisible) ? Visibility.Visible : Visibility.Collapsed;
+            bool isVisible = false;
+
+            if (value is bool b)
+            {
+                isVisible = b;
+            }
+
+            // Если из XAML передали параметр "invert", меняем логику на противоположную
+            if (parameter != null && parameter.ToString() == "invert")
+            {
+                isVisible = !isVisible;
+            }
+
+            // Обязательно возвращаем строгий тип Visibility, иначе XDG-000 будет ругаться
+            return isVisible ? Visibility.Visible : Visibility.Collapsed;
         }
+
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) => null;
     }
 }

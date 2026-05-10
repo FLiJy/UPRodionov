@@ -90,6 +90,10 @@ namespace UchebnayaPraktika
                     bookCards = bookCards.OrderBy(b => b.AverageRating).ToList();
                     break;
             }
+            if (LvBooks == null)
+            {
+                return;
+            }
 
             LvBooks.ItemsSource = bookCards;
         }
@@ -107,8 +111,7 @@ namespace UchebnayaPraktika
                 var book = Core.Context.Books.FirstOrDefault(b => b.Id == bookId);
                 if (book != null)
                 {
-                    // Переходим на страницу книги (передаем объект книги в конструктор)
-                    // NavigationService.Navigate(new BookPage(book));
+                    NavigationService.Navigate(new BookPage(book));
                     MessageBox.Show($"Тут откроется страница книги: {book.Title}");
                 }
             }

@@ -1,7 +1,7 @@
 ﻿<Window x:Class="UchebnayaPraktika.RegistrationWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Регистрация" Height="450" Width="350" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
+        Title="Регистрация" Height="500" Width="500" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
     <Grid Margin="25">
         <StackPanel VerticalAlignment="Center">
             <TextBlock Text="Создание аккаунта" FontSize="22" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,0,0,20"/>

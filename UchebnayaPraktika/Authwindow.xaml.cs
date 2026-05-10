@@ -40,10 +40,9 @@ namespace UchebnayaPraktika
 
         private void BtnRegister_Click(object sender, RoutedEventArgs e)
         {
-            // Здесь переход на окно регистрации
-            // RegistrationWindow reg = new RegistrationWindow();
-            // reg.Show();
-            // this.Close();
+            RegistrationWindow reg = new RegistrationWindow();
+            reg.Show();
+            this.Close();
             MessageBox.Show("Здесь будет открываться окно регистрации.");
         }
     }
