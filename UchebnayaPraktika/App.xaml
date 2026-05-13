@@ -9,6 +9,5 @@
         <conv:VisibilityConverter x:Key="VisibilityConverter"/>
 
         <conv:ImagePathConverter x:Key="ImagePathConverter"/>
-        <conv:ImagePathConverter x:Key="ImgConv"/>
     </Application.Resources>
 </Application>

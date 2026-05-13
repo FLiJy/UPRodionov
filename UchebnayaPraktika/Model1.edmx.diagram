@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="167c7182d0cd48c2a5b54616360d47ee" Name="Diagram1">
+      <Diagram DiagramId="825e9621f3154ece9867a51734ce7a39" Name="Diagram1">
         <EntityTypeShape EntityType="UPRodionovModel.BookGenres" Width="1.5" PointX="7.5" PointY="8.25" IsExpanded="true" />
         <EntityTypeShape EntityType="UPRodionovModel.Books" Width="1.5" PointX="5.25" PointY="7.5" IsExpanded="true" />
         <EntityTypeShape EntityType="UPRodionovModel.Complaints" Width="1.5" PointX="7.5" PointY="11.625" IsExpanded="true" />
@@ -14,22 +14,22 @@
         <EntityTypeShape EntityType="UPRodionovModel.RoleRequests" Width="1.5" PointX="5.25" PointY="11.75" IsExpanded="true" />
         <EntityTypeShape EntityType="UPRodionovModel.Roles" Width="1.5" PointX="0.75" PointY="9.75" IsExpanded="true" />
         <EntityTypeShape EntityType="UPRodionovModel.sysdiagrams" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="UPRodionovModel.UnfreezeRequests" Width="1.5" PointX="10.5" PointY="5.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="UPRodionovModel.Users" Width="1.5" PointX="3" PointY="8.75" IsExpanded="true" />
-        <AssociationConnector Association="UPRodionovModel.FK__BookGenre__BookI__46E78A0C" ManuallyRouted="false" />
-        <AssociationConnector Association="UPRodionovModel.FK__BookGenre__Genre__47DBAE45" ManuallyRouted="false" />
-        <AssociationConnector Association="UPRodionovModel.FK__Books__AuthorId__412EB0B6" ManuallyRouted="false" />
-        <AssociationConnector Association="UPRodionovModel.FK__Complaint__BookI__5812160E" ManuallyRouted="false" />
-        <AssociationConnector Association="UPRodionovModel.FK__ReadingLi__BookI__534D60F1" ManuallyRouted="false" />
-        <AssociationConnector Association="UPRodionovModel.FK__Reviews__BookId__4D94879B" ManuallyRouted="false" />
-        <AssociationConnector Association="UPRodionovModel.FK__UnfreezeR__BookI__628FA481" ManuallyRouted="false" />
-        <AssociationConnector Association="UPRodionovModel.FK__Complaint__Revie__59063A47" ManuallyRouted="false" />
-        <AssociationConnector Association="UPRodionovModel.FK__Complaint__UserI__571DF1D5" ManuallyRouted="false" />
-        <AssociationConnector Association="UPRodionovModel.FK__ReadingLi__UserI__52593CB8" ManuallyRouted="false" />
-        <AssociationConnector Association="UPRodionovModel.FK__Reviews__UserId__4CA06362" ManuallyRouted="false" />
-        <AssociationConnector Association="UPRodionovModel.FK__RoleReque__UserI__5DCAEF64" ManuallyRouted="false" />
-        <AssociationConnector Association="UPRodionovModel.FK__Users__RoleId__3D5E1FD2" ManuallyRouted="false" />
-        <AssociationConnector Association="UPRodionovModel.FK__UnfreezeR__UserI__619B8048" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="UPRodionovModel.UnfreezeRequests" Width="1.5" PointX="10.5" PointY="5.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="UPRodionovModel.Users" Width="1.5" PointX="3" PointY="8.625" IsExpanded="true" />
+        <AssociationConnector Association="UPRodionovModel.FK__BookGenre__BookI__797309D9" ManuallyRouted="false" />
+        <AssociationConnector Association="UPRodionovModel.FK__BookGenre__Genre__7A672E12" ManuallyRouted="false" />
+        <AssociationConnector Association="UPRodionovModel.FK__Books__AuthorId__7B5B524B" ManuallyRouted="false" />
+        <AssociationConnector Association="UPRodionovModel.FK__Complaint__BookI__7C4F7684" ManuallyRouted="false" />
+        <AssociationConnector Association="UPRodionovModel.FK__ReadingLi__BookI__7F2BE32F" ManuallyRouted="false" />
+        <AssociationConnector Association="UPRodionovModel.FK__Reviews__BookId__01142BA1" ManuallyRouted="false" />
+        <AssociationConnector Association="UPRodionovModel.FK__UnfreezeR__BookI__03F0984C" ManuallyRouted="false" />
+        <AssociationConnector Association="UPRodionovModel.FK__Complaint__Revie__7D439ABD" ManuallyRouted="false" />
+        <AssociationConnector Association="UPRodionovModel.FK__Complaint__UserI__7E37BEF6" ManuallyRouted="false" />
+        <AssociationConnector Association="UPRodionovModel.FK__ReadingLi__UserI__00200768" ManuallyRouted="false" />
+        <AssociationConnector Association="UPRodionovModel.FK__Reviews__UserId__02084FDA" ManuallyRouted="false" />
+        <AssociationConnector Association="UPRodionovModel.FK__RoleReque__UserI__02FC7413" ManuallyRouted="false" />
+        <AssociationConnector Association="UPRodionovModel.FK__Users__RoleId__05D8E0BE" ManuallyRouted="false" />
+        <AssociationConnector Association="UPRodionovModel.FK__UnfreezeR__UserI__04E4BC85" ManuallyRouted="false" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

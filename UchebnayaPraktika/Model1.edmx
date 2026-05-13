@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="Хранилище UPRodionovModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="Хранилище UPRodionovModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="BookGenres">
           <Key>
             <PropertyRef Name="Id" />
@@ -113,7 +113,7 @@
           <Property Name="IsFrozen" Type="bit" />
           <Property Name="PhotoPath" Type="nvarchar(max)" />
         </EntityType>
-        <Association Name="FK__BookGenre__BookI__46E78A0C">
+        <Association Name="FK__BookGenre__BookI__797309D9">
           <End Role="Books" Type="Self.Books" Multiplicity="1" />
           <End Role="BookGenres" Type="Self.BookGenres" Multiplicity="*" />
           <ReferentialConstraint>
@@ -125,7 +125,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__BookGenre__Genre__47DBAE45">
+        <Association Name="FK__BookGenre__Genre__7A672E12">
           <End Role="Genres" Type="Self.Genres" Multiplicity="1" />
           <End Role="BookGenres" Type="Self.BookGenres" Multiplicity="*" />
           <ReferentialConstraint>
@@ -137,7 +137,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Books__AuthorId__412EB0B6">
+        <Association Name="FK__Books__AuthorId__7B5B524B">
           <End Role="Users" Type="Self.Users" Multiplicity="1" />
           <End Role="Books" Type="Self.Books" Multiplicity="*" />
           <ReferentialConstraint>
@@ -149,7 +149,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Complaint__BookI__5812160E">
+        <Association Name="FK__Complaint__BookI__7C4F7684">
           <End Role="Books" Type="Self.Books" Multiplicity="0..1" />
           <End Role="Complaints" Type="Self.Complaints" Multiplicity="*" />
           <ReferentialConstraint>
@@ -161,7 +161,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Complaint__Revie__59063A47">
+        <Association Name="FK__Complaint__Revie__7D439ABD">
           <End Role="Reviews" Type="Self.Reviews" Multiplicity="0..1" />
           <End Role="Complaints" Type="Self.Complaints" Multiplicity="*" />
           <ReferentialConstraint>
@@ -173,7 +173,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Complaint__UserI__571DF1D5">
+        <Association Name="FK__Complaint__UserI__7E37BEF6">
           <End Role="Users" Type="Self.Users" Multiplicity="1" />
           <End Role="Complaints" Type="Self.Complaints" Multiplicity="*" />
           <ReferentialConstraint>
@@ -185,7 +185,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__ReadingLi__BookI__534D60F1">
+        <Association Name="FK__ReadingLi__BookI__7F2BE32F">
           <End Role="Books" Type="Self.Books" Multiplicity="1" />
           <End Role="ReadingLists" Type="Self.ReadingLists" Multiplicity="*" />
           <ReferentialConstraint>
@@ -197,7 +197,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__ReadingLi__UserI__52593CB8">
+        <Association Name="FK__ReadingLi__UserI__00200768">
           <End Role="Users" Type="Self.Users" Multiplicity="1" />
           <End Role="ReadingLists" Type="Self.ReadingLists" Multiplicity="*" />
           <ReferentialConstraint>
@@ -209,7 +209,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Reviews__BookId__4D94879B">
+        <Association Name="FK__Reviews__BookId__01142BA1">
           <End Role="Books" Type="Self.Books" Multiplicity="1" />
           <End Role="Reviews" Type="Self.Reviews" Multiplicity="*" />
           <ReferentialConstraint>
@@ -221,7 +221,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Reviews__UserId__4CA06362">
+        <Association Name="FK__Reviews__UserId__02084FDA">
           <End Role="Users" Type="Self.Users" Multiplicity="1" />
           <End Role="Reviews" Type="Self.Reviews" Multiplicity="*" />
           <ReferentialConstraint>
@@ -233,7 +233,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__RoleReque__UserI__5DCAEF64">
+        <Association Name="FK__RoleReque__UserI__02FC7413">
           <End Role="Users" Type="Self.Users" Multiplicity="1" />
           <End Role="RoleRequests" Type="Self.RoleRequests" Multiplicity="*" />
           <ReferentialConstraint>
@@ -245,7 +245,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__UnfreezeR__BookI__628FA481">
+        <Association Name="FK__UnfreezeR__BookI__03F0984C">
           <End Role="Books" Type="Self.Books" Multiplicity="0..1" />
           <End Role="UnfreezeRequests" Type="Self.UnfreezeRequests" Multiplicity="*" />
           <ReferentialConstraint>
@@ -257,7 +257,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__UnfreezeR__UserI__619B8048">
+        <Association Name="FK__UnfreezeR__UserI__04E4BC85">
           <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
           <End Role="UnfreezeRequests" Type="Self.UnfreezeRequests" Multiplicity="*" />
           <ReferentialConstraint>
@@ -269,7 +269,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Users__RoleId__3D5E1FD2">
+        <Association Name="FK__Users__RoleId__05D8E0BE">
           <End Role="Roles" Type="Self.Roles" Multiplicity="1" />
           <End Role="Users" Type="Self.Users" Multiplicity="*" />
           <ReferentialConstraint>
@@ -293,64 +293,65 @@
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UnfreezeRequests" EntityType="Self.UnfreezeRequests" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK__BookGenre__BookI__46E78A0C" Association="Self.FK__BookGenre__BookI__46E78A0C">
+          <AssociationSet Name="FK__BookGenre__BookI__797309D9" Association="Self.FK__BookGenre__BookI__797309D9">
             <End Role="Books" EntitySet="Books" />
             <End Role="BookGenres" EntitySet="BookGenres" />
           </AssociationSet>
-          <AssociationSet Name="FK__BookGenre__Genre__47DBAE45" Association="Self.FK__BookGenre__Genre__47DBAE45">
+          <AssociationSet Name="FK__BookGenre__Genre__7A672E12" Association="Self.FK__BookGenre__Genre__7A672E12">
             <End Role="Genres" EntitySet="Genres" />
             <End Role="BookGenres" EntitySet="BookGenres" />
           </AssociationSet>
-          <AssociationSet Name="FK__Books__AuthorId__412EB0B6" Association="Self.FK__Books__AuthorId__412EB0B6">
+          <AssociationSet Name="FK__Books__AuthorId__7B5B524B" Association="Self.FK__Books__AuthorId__7B5B524B">
             <End Role="Users" EntitySet="Users" />
             <End Role="Books" EntitySet="Books" />
           </AssociationSet>
-          <AssociationSet Name="FK__Complaint__BookI__5812160E" Association="Self.FK__Complaint__BookI__5812160E">
+          <AssociationSet Name="FK__Complaint__BookI__7C4F7684" Association="Self.FK__Complaint__BookI__7C4F7684">
             <End Role="Books" EntitySet="Books" />
             <End Role="Complaints" EntitySet="Complaints" />
           </AssociationSet>
-          <AssociationSet Name="FK__Complaint__Revie__59063A47" Association="Self.FK__Complaint__Revie__59063A47">
+          <AssociationSet Name="FK__Complaint__Revie__7D439ABD" Association="Self.FK__Complaint__Revie__7D439ABD">
             <End Role="Reviews" EntitySet="Reviews" />
             <End Role="Complaints" EntitySet="Complaints" />
           </AssociationSet>
-          <AssociationSet Name="FK__Complaint__UserI__571DF1D5" Association="Self.FK__Complaint__UserI__571DF1D5">
+          <AssociationSet Name="FK__Complaint__UserI__7E37BEF6" Association="Self.FK__Complaint__UserI__7E37BEF6">
             <End Role="Users" EntitySet="Users" />
             <End Role="Complaints" EntitySet="Complaints" />
           </AssociationSet>
-          <AssociationSet Name="FK__ReadingLi__BookI__534D60F1" Association="Self.FK__ReadingLi__BookI__534D60F1">
+          <AssociationSet Name="FK__ReadingLi__BookI__7F2BE32F" Association="Self.FK__ReadingLi__BookI__7F2BE32F">
             <End Role="Books" EntitySet="Books" />
             <End Role="ReadingLists" EntitySet="ReadingLists" />
           </AssociationSet>
-          <AssociationSet Name="FK__ReadingLi__UserI__52593CB8" Association="Self.FK__ReadingLi__UserI__52593CB8">
+          <AssociationSet Name="FK__ReadingLi__UserI__00200768" Association="Self.FK__ReadingLi__UserI__00200768">
             <End Role="Users" EntitySet="Users" />
             <End Role="ReadingLists" EntitySet="ReadingLists" />
           </AssociationSet>
-          <AssociationSet Name="FK__Reviews__BookId__4D94879B" Association="Self.FK__Reviews__BookId__4D94879B">
+          <AssociationSet Name="FK__Reviews__BookId__01142BA1" Association="Self.FK__Reviews__BookId__01142BA1">
             <End Role="Books" EntitySet="Books" />
             <End Role="Reviews" EntitySet="Reviews" />
           </AssociationSet>
-          <AssociationSet Name="FK__Reviews__UserId__4CA06362" Association="Self.FK__Reviews__UserId__4CA06362">
+          <AssociationSet Name="FK__Reviews__UserId__02084FDA" Association="Self.FK__Reviews__UserId__02084FDA">
             <End Role="Users" EntitySet="Users" />
             <End Role="Reviews" EntitySet="Reviews" />
           </AssociationSet>
-          <AssociationSet Name="FK__RoleReque__UserI__5DCAEF64" Association="Self.FK__RoleReque__UserI__5DCAEF64">
+          <AssociationSet Name="FK__RoleReque__UserI__02FC7413" Association="Self.FK__RoleReque__UserI__02FC7413">
             <End Role="Users" EntitySet="Users" />
             <End Role="RoleRequests" EntitySet="RoleRequests" />
           </AssociationSet>
-          <AssociationSet Name="FK__UnfreezeR__BookI__628FA481" Association="Self.FK__UnfreezeR__BookI__628FA481">
+          <AssociationSet Name="FK__UnfreezeR__BookI__03F0984C" Association="Self.FK__UnfreezeR__BookI__03F0984C">
             <End Role="Books" EntitySet="Books" />
             <End Role="UnfreezeRequests" EntitySet="UnfreezeRequests" />
           </AssociationSet>
-          <AssociationSet Name="FK__UnfreezeR__UserI__619B8048" Association="Self.FK__UnfreezeR__UserI__619B8048">
+          <AssociationSet Name="FK__UnfreezeR__UserI__04E4BC85" Association="Self.FK__UnfreezeR__UserI__04E4BC85">
             <End Role="Users" EntitySet="Users" />
             <End Role="UnfreezeRequests" EntitySet="UnfreezeRequests" />
           </AssociationSet>
-          <AssociationSet Name="FK__Users__RoleId__3D5E1FD2" Association="Self.FK__Users__RoleId__3D5E1FD2">
+          <AssociationSet Name="FK__Users__RoleId__05D8E0BE" Association="Self.FK__Users__RoleId__05D8E0BE">
             <End Role="Roles" EntitySet="Roles" />
             <End Role="Users" EntitySet="Users" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="UPRodionovModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -361,8 +362,8 @@
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="BookId" Type="Int32" Nullable="false" />
           <Property Name="GenreId" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Books" Relationship="Self.FK__BookGenre__BookI__46E78A0C" FromRole="BookGenres" ToRole="Books" />
-          <NavigationProperty Name="Genres" Relationship="Self.FK__BookGenre__Genre__47DBAE45" FromRole="BookGenres" ToRole="Genres" />
+          <NavigationProperty Name="Books" Relationship="Self.FK__BookGenre__BookI__797309D9" FromRole="BookGenres" ToRole="Books" />
+          <NavigationProperty Name="Genres" Relationship="Self.FK__BookGenre__Genre__7A672E12" FromRole="BookGenres" ToRole="Genres" />
         </EntityType>
         <EntityType Name="Books">
           <Key>
@@ -375,12 +376,12 @@
           <Property Name="Content" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="AuthorId" Type="Int32" Nullable="false" />
           <Property Name="IsFrozen" Type="Boolean" />
-          <NavigationProperty Name="BookGenres" Relationship="Self.FK__BookGenre__BookI__46E78A0C" FromRole="Books" ToRole="BookGenres" />
-          <NavigationProperty Name="Users" Relationship="Self.FK__Books__AuthorId__412EB0B6" FromRole="Books" ToRole="Users" />
-          <NavigationProperty Name="Complaints" Relationship="Self.FK__Complaint__BookI__5812160E" FromRole="Books" ToRole="Complaints" />
-          <NavigationProperty Name="ReadingLists" Relationship="Self.FK__ReadingLi__BookI__534D60F1" FromRole="Books" ToRole="ReadingLists" />
-          <NavigationProperty Name="Reviews" Relationship="Self.FK__Reviews__BookId__4D94879B" FromRole="Books" ToRole="Reviews" />
-          <NavigationProperty Name="UnfreezeRequests" Relationship="Self.FK__UnfreezeR__BookI__628FA481" FromRole="Books" ToRole="UnfreezeRequests" />
+          <NavigationProperty Name="BookGenres" Relationship="Self.FK__BookGenre__BookI__797309D9" FromRole="Books" ToRole="BookGenres" />
+          <NavigationProperty Name="Users" Relationship="Self.FK__Books__AuthorId__7B5B524B" FromRole="Books" ToRole="Users" />
+          <NavigationProperty Name="Complaints" Relationship="Self.FK__Complaint__BookI__7C4F7684" FromRole="Books" ToRole="Complaints" />
+          <NavigationProperty Name="ReadingLists" Relationship="Self.FK__ReadingLi__BookI__7F2BE32F" FromRole="Books" ToRole="ReadingLists" />
+          <NavigationProperty Name="Reviews" Relationship="Self.FK__Reviews__BookId__01142BA1" FromRole="Books" ToRole="Reviews" />
+          <NavigationProperty Name="UnfreezeRequests" Relationship="Self.FK__UnfreezeR__BookI__03F0984C" FromRole="Books" ToRole="UnfreezeRequests" />
         </EntityType>
         <EntityType Name="Complaints">
           <Key>
@@ -392,9 +393,9 @@
           <Property Name="ReviewId" Type="Int32" />
           <Property Name="Reason" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="CreatedAt" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="Books" Relationship="Self.FK__Complaint__BookI__5812160E" FromRole="Complaints" ToRole="Books" />
-          <NavigationProperty Name="Reviews" Relationship="Self.FK__Complaint__Revie__59063A47" FromRole="Complaints" ToRole="Reviews" />
-          <NavigationProperty Name="Users" Relationship="Self.FK__Complaint__UserI__571DF1D5" FromRole="Complaints" ToRole="Users" />
+          <NavigationProperty Name="Books" Relationship="Self.FK__Complaint__BookI__7C4F7684" FromRole="Complaints" ToRole="Books" />
+          <NavigationProperty Name="Reviews" Relationship="Self.FK__Complaint__Revie__7D439ABD" FromRole="Complaints" ToRole="Reviews" />
+          <NavigationProperty Name="Users" Relationship="Self.FK__Complaint__UserI__7E37BEF6" FromRole="Complaints" ToRole="Users" />
         </EntityType>
         <EntityType Name="Genres">
           <Key>
@@ -403,7 +404,7 @@
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="BookGenres" Relationship="Self.FK__BookGenre__Genre__47DBAE45" FromRole="Genres" ToRole="BookGenres" />
+          <NavigationProperty Name="BookGenres" Relationship="Self.FK__BookGenre__Genre__7A672E12" FromRole="Genres" ToRole="BookGenres" />
         </EntityType>
         <EntityType Name="ReadingLists">
           <Key>
@@ -413,8 +414,8 @@
           <Property Name="UserId" Type="Int32" Nullable="false" />
           <Property Name="BookId" Type="Int32" Nullable="false" />
           <Property Name="Status" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="Books" Relationship="Self.FK__ReadingLi__BookI__534D60F1" FromRole="ReadingLists" ToRole="Books" />
-          <NavigationProperty Name="Users" Relationship="Self.FK__ReadingLi__UserI__52593CB8" FromRole="ReadingLists" ToRole="Users" />
+          <NavigationProperty Name="Books" Relationship="Self.FK__ReadingLi__BookI__7F2BE32F" FromRole="ReadingLists" ToRole="Books" />
+          <NavigationProperty Name="Users" Relationship="Self.FK__ReadingLi__UserI__00200768" FromRole="ReadingLists" ToRole="Users" />
         </EntityType>
         <EntityType Name="Reviews">
           <Key>
@@ -426,9 +427,9 @@
           <Property Name="Rating" Type="Int32" Nullable="false" />
           <Property Name="Text" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="CreatedAt" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="Books" Relationship="Self.FK__Reviews__BookId__4D94879B" FromRole="Reviews" ToRole="Books" />
-          <NavigationProperty Name="Complaints" Relationship="Self.FK__Complaint__Revie__59063A47" FromRole="Reviews" ToRole="Complaints" />
-          <NavigationProperty Name="Users" Relationship="Self.FK__Reviews__UserId__4CA06362" FromRole="Reviews" ToRole="Users" />
+          <NavigationProperty Name="Books" Relationship="Self.FK__Reviews__BookId__01142BA1" FromRole="Reviews" ToRole="Books" />
+          <NavigationProperty Name="Complaints" Relationship="Self.FK__Complaint__Revie__7D439ABD" FromRole="Reviews" ToRole="Complaints" />
+          <NavigationProperty Name="Users" Relationship="Self.FK__Reviews__UserId__02084FDA" FromRole="Reviews" ToRole="Users" />
         </EntityType>
         <EntityType Name="RoleRequests">
           <Key>
@@ -438,7 +439,7 @@
           <Property Name="UserId" Type="Int32" Nullable="false" />
           <Property Name="Status" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
           <Property Name="CreatedAt" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="Users" Relationship="Self.FK__RoleReque__UserI__5DCAEF64" FromRole="RoleRequests" ToRole="Users" />
+          <NavigationProperty Name="Users" Relationship="Self.FK__RoleReque__UserI__02FC7413" FromRole="RoleRequests" ToRole="Users" />
         </EntityType>
         <EntityType Name="Roles">
           <Key>
@@ -446,7 +447,7 @@
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="Users" Relationship="Self.FK__Users__RoleId__3D5E1FD2" FromRole="Roles" ToRole="Users" />
+          <NavigationProperty Name="Users" Relationship="Self.FK__Users__RoleId__05D8E0BE" FromRole="Roles" ToRole="Users" />
         </EntityType>
         <EntityType Name="sysdiagrams">
           <Key>
@@ -467,8 +468,8 @@
           <Property Name="BookId" Type="Int32" />
           <Property Name="Reason" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="CreatedAt" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="Books" Relationship="Self.FK__UnfreezeR__BookI__628FA481" FromRole="UnfreezeRequests" ToRole="Books" />
-          <NavigationProperty Name="Users" Relationship="Self.FK__UnfreezeR__UserI__619B8048" FromRole="UnfreezeRequests" ToRole="Users" />
+          <NavigationProperty Name="Books" Relationship="Self.FK__UnfreezeR__BookI__03F0984C" FromRole="UnfreezeRequests" ToRole="Books" />
+          <NavigationProperty Name="Users" Relationship="Self.FK__UnfreezeR__UserI__04E4BC85" FromRole="UnfreezeRequests" ToRole="Users" />
         </EntityType>
         <EntityType Name="Users">
           <Key>
@@ -481,16 +482,16 @@
           <Property Name="DisplayName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="RoleId" Type="Int32" Nullable="false" />
           <Property Name="IsFrozen" Type="Boolean" />
-          <NavigationProperty Name="Books" Relationship="Self.FK__Books__AuthorId__412EB0B6" FromRole="Users" ToRole="Books" />
-          <NavigationProperty Name="Complaints" Relationship="Self.FK__Complaint__UserI__571DF1D5" FromRole="Users" ToRole="Complaints" />
-          <NavigationProperty Name="ReadingLists" Relationship="Self.FK__ReadingLi__UserI__52593CB8" FromRole="Users" ToRole="ReadingLists" />
-          <NavigationProperty Name="Reviews" Relationship="Self.FK__Reviews__UserId__4CA06362" FromRole="Users" ToRole="Reviews" />
-          <NavigationProperty Name="RoleRequests" Relationship="Self.FK__RoleReque__UserI__5DCAEF64" FromRole="Users" ToRole="RoleRequests" />
-          <NavigationProperty Name="Roles" Relationship="Self.FK__Users__RoleId__3D5E1FD2" FromRole="Users" ToRole="Roles" />
-          <NavigationProperty Name="UnfreezeRequests" Relationship="Self.FK__UnfreezeR__UserI__619B8048" FromRole="Users" ToRole="UnfreezeRequests" />
           <Property Name="PhotoPath" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Books" Relationship="Self.FK__Books__AuthorId__7B5B524B" FromRole="Users" ToRole="Books" />
+          <NavigationProperty Name="Complaints" Relationship="Self.FK__Complaint__UserI__7E37BEF6" FromRole="Users" ToRole="Complaints" />
+          <NavigationProperty Name="ReadingLists" Relationship="Self.FK__ReadingLi__UserI__00200768" FromRole="Users" ToRole="ReadingLists" />
+          <NavigationProperty Name="Reviews" Relationship="Self.FK__Reviews__UserId__02084FDA" FromRole="Users" ToRole="Reviews" />
+          <NavigationProperty Name="RoleRequests" Relationship="Self.FK__RoleReque__UserI__02FC7413" FromRole="Users" ToRole="RoleRequests" />
+          <NavigationProperty Name="Roles" Relationship="Self.FK__Users__RoleId__05D8E0BE" FromRole="Users" ToRole="Roles" />
+          <NavigationProperty Name="UnfreezeRequests" Relationship="Self.FK__UnfreezeR__UserI__04E4BC85" FromRole="Users" ToRole="UnfreezeRequests" />
         </EntityType>
-        <Association Name="FK__BookGenre__BookI__46E78A0C">
+        <Association Name="FK__BookGenre__BookI__797309D9">
           <End Role="Books" Type="Self.Books" Multiplicity="1" />
           <End Role="BookGenres" Type="Self.BookGenres" Multiplicity="*" />
           <ReferentialConstraint>
@@ -502,7 +503,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__BookGenre__Genre__47DBAE45">
+        <Association Name="FK__BookGenre__Genre__7A672E12">
           <End Role="Genres" Type="Self.Genres" Multiplicity="1" />
           <End Role="BookGenres" Type="Self.BookGenres" Multiplicity="*" />
           <ReferentialConstraint>
@@ -514,7 +515,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Books__AuthorId__412EB0B6">
+        <Association Name="FK__Books__AuthorId__7B5B524B">
           <End Role="Users" Type="Self.Users" Multiplicity="1" />
           <End Role="Books" Type="Self.Books" Multiplicity="*" />
           <ReferentialConstraint>
@@ -526,7 +527,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Complaint__BookI__5812160E">
+        <Association Name="FK__Complaint__BookI__7C4F7684">
           <End Role="Books" Type="Self.Books" Multiplicity="0..1" />
           <End Role="Complaints" Type="Self.Complaints" Multiplicity="*" />
           <ReferentialConstraint>
@@ -538,7 +539,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__ReadingLi__BookI__534D60F1">
+        <Association Name="FK__ReadingLi__BookI__7F2BE32F">
           <End Role="Books" Type="Self.Books" Multiplicity="1" />
           <End Role="ReadingLists" Type="Self.ReadingLists" Multiplicity="*" />
           <ReferentialConstraint>
@@ -550,7 +551,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Reviews__BookId__4D94879B">
+        <Association Name="FK__Reviews__BookId__01142BA1">
           <End Role="Books" Type="Self.Books" Multiplicity="1" />
           <End Role="Reviews" Type="Self.Reviews" Multiplicity="*" />
           <ReferentialConstraint>
@@ -562,7 +563,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__UnfreezeR__BookI__628FA481">
+        <Association Name="FK__UnfreezeR__BookI__03F0984C">
           <End Role="Books" Type="Self.Books" Multiplicity="0..1" />
           <End Role="UnfreezeRequests" Type="Self.UnfreezeRequests" Multiplicity="*" />
           <ReferentialConstraint>
@@ -574,7 +575,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Complaint__Revie__59063A47">
+        <Association Name="FK__Complaint__Revie__7D439ABD">
           <End Role="Reviews" Type="Self.Reviews" Multiplicity="0..1" />
           <End Role="Complaints" Type="Self.Complaints" Multiplicity="*" />
           <ReferentialConstraint>
@@ -586,7 +587,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Complaint__UserI__571DF1D5">
+        <Association Name="FK__Complaint__UserI__7E37BEF6">
           <End Role="Users" Type="Self.Users" Multiplicity="1" />
           <End Role="Complaints" Type="Self.Complaints" Multiplicity="*" />
           <ReferentialConstraint>
@@ -598,7 +599,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__ReadingLi__UserI__52593CB8">
+        <Association Name="FK__ReadingLi__UserI__00200768">
           <End Role="Users" Type="Self.Users" Multiplicity="1" />
           <End Role="ReadingLists" Type="Self.ReadingLists" Multiplicity="*" />
           <ReferentialConstraint>
@@ -610,7 +611,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Reviews__UserId__4CA06362">
+        <Association Name="FK__Reviews__UserId__02084FDA">
           <End Role="Users" Type="Self.Users" Multiplicity="1" />
           <End Role="Reviews" Type="Self.Reviews" Multiplicity="*" />
           <ReferentialConstraint>
@@ -622,7 +623,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__RoleReque__UserI__5DCAEF64">
+        <Association Name="FK__RoleReque__UserI__02FC7413">
           <End Role="Users" Type="Self.Users" Multiplicity="1" />
           <End Role="RoleRequests" Type="Self.RoleRequests" Multiplicity="*" />
           <ReferentialConstraint>
@@ -634,7 +635,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Users__RoleId__3D5E1FD2">
+        <Association Name="FK__Users__RoleId__05D8E0BE">
           <End Role="Roles" Type="Self.Roles" Multiplicity="1" />
           <End Role="Users" Type="Self.Users" Multiplicity="*" />
           <ReferentialConstraint>
@@ -646,7 +647,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__UnfreezeR__UserI__619B8048">
+        <Association Name="FK__UnfreezeR__UserI__04E4BC85">
           <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
           <End Role="UnfreezeRequests" Type="Self.UnfreezeRequests" Multiplicity="*" />
           <ReferentialConstraint>
@@ -670,59 +671,59 @@
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
           <EntitySet Name="UnfreezeRequests" EntityType="Self.UnfreezeRequests" />
           <EntitySet Name="Users" EntityType="Self.Users" />
-          <AssociationSet Name="FK__BookGenre__BookI__46E78A0C" Association="Self.FK__BookGenre__BookI__46E78A0C">
+          <AssociationSet Name="FK__BookGenre__BookI__797309D9" Association="Self.FK__BookGenre__BookI__797309D9">
             <End Role="Books" EntitySet="Books" />
             <End Role="BookGenres" EntitySet="BookGenres" />
           </AssociationSet>
-          <AssociationSet Name="FK__BookGenre__Genre__47DBAE45" Association="Self.FK__BookGenre__Genre__47DBAE45">
+          <AssociationSet Name="FK__BookGenre__Genre__7A672E12" Association="Self.FK__BookGenre__Genre__7A672E12">
             <End Role="Genres" EntitySet="Genres" />
             <End Role="BookGenres" EntitySet="BookGenres" />
           </AssociationSet>
-          <AssociationSet Name="FK__Books__AuthorId__412EB0B6" Association="Self.FK__Books__AuthorId__412EB0B6">
+          <AssociationSet Name="FK__Books__AuthorId__7B5B524B" Association="Self.FK__Books__AuthorId__7B5B524B">
             <End Role="Users" EntitySet="Users" />
             <End Role="Books" EntitySet="Books" />
           </AssociationSet>
-          <AssociationSet Name="FK__Complaint__BookI__5812160E" Association="Self.FK__Complaint__BookI__5812160E">
+          <AssociationSet Name="FK__Complaint__BookI__7C4F7684" Association="Self.FK__Complaint__BookI__7C4F7684">
             <End Role="Books" EntitySet="Books" />
             <End Role="Complaints" EntitySet="Complaints" />
           </AssociationSet>
-          <AssociationSet Name="FK__ReadingLi__BookI__534D60F1" Association="Self.FK__ReadingLi__BookI__534D60F1">
+          <AssociationSet Name="FK__ReadingLi__BookI__7F2BE32F" Association="Self.FK__ReadingLi__BookI__7F2BE32F">
             <End Role="Books" EntitySet="Books" />
             <End Role="ReadingLists" EntitySet="ReadingLists" />
           </AssociationSet>
-          <AssociationSet Name="FK__Reviews__BookId__4D94879B" Association="Self.FK__Reviews__BookId__4D94879B">
+          <AssociationSet Name="FK__Reviews__BookId__01142BA1" Association="Self.FK__Reviews__BookId__01142BA1">
             <End Role="Books" EntitySet="Books" />
             <End Role="Reviews" EntitySet="Reviews" />
           </AssociationSet>
-          <AssociationSet Name="FK__UnfreezeR__BookI__628FA481" Association="Self.FK__UnfreezeR__BookI__628FA481">
+          <AssociationSet Name="FK__UnfreezeR__BookI__03F0984C" Association="Self.FK__UnfreezeR__BookI__03F0984C">
             <End Role="Books" EntitySet="Books" />
             <End Role="UnfreezeRequests" EntitySet="UnfreezeRequests" />
           </AssociationSet>
-          <AssociationSet Name="FK__Complaint__Revie__59063A47" Association="Self.FK__Complaint__Revie__59063A47">
+          <AssociationSet Name="FK__Complaint__Revie__7D439ABD" Association="Self.FK__Complaint__Revie__7D439ABD">
             <End Role="Reviews" EntitySet="Reviews" />
             <End Role="Complaints" EntitySet="Complaints" />
           </AssociationSet>
-          <AssociationSet Name="FK__Complaint__UserI__571DF1D5" Association="Self.FK__Complaint__UserI__571DF1D5">
+          <AssociationSet Name="FK__Complaint__UserI__7E37BEF6" Association="Self.FK__Complaint__UserI__7E37BEF6">
             <End Role="Users" EntitySet="Users" />
             <End Role="Complaints" EntitySet="Complaints" />
           </AssociationSet>
-          <AssociationSet Name="FK__ReadingLi__UserI__52593CB8" Association="Self.FK__ReadingLi__UserI__52593CB8">
+          <AssociationSet Name="FK__ReadingLi__UserI__00200768" Association="Self.FK__ReadingLi__UserI__00200768">
             <End Role="Users" EntitySet="Users" />
             <End Role="ReadingLists" EntitySet="ReadingLists" />
           </AssociationSet>
-          <AssociationSet Name="FK__Reviews__UserId__4CA06362" Association="Self.FK__Reviews__UserId__4CA06362">
+          <AssociationSet Name="FK__Reviews__UserId__02084FDA" Association="Self.FK__Reviews__UserId__02084FDA">
             <End Role="Users" EntitySet="Users" />
             <End Role="Reviews" EntitySet="Reviews" />
           </AssociationSet>
-          <AssociationSet Name="FK__RoleReque__UserI__5DCAEF64" Association="Self.FK__RoleReque__UserI__5DCAEF64">
+          <AssociationSet Name="FK__RoleReque__UserI__02FC7413" Association="Self.FK__RoleReque__UserI__02FC7413">
             <End Role="Users" EntitySet="Users" />
             <End Role="RoleRequests" EntitySet="RoleRequests" />
           </AssociationSet>
-          <AssociationSet Name="FK__Users__RoleId__3D5E1FD2" Association="Self.FK__Users__RoleId__3D5E1FD2">
+          <AssociationSet Name="FK__Users__RoleId__05D8E0BE" Association="Self.FK__Users__RoleId__05D8E0BE">
             <End Role="Roles" EntitySet="Roles" />
             <End Role="Users" EntitySet="Users" />
           </AssociationSet>
-          <AssociationSet Name="FK__UnfreezeR__UserI__619B8048" Association="Self.FK__UnfreezeR__UserI__619B8048">
+          <AssociationSet Name="FK__UnfreezeR__UserI__04E4BC85" Association="Self.FK__UnfreezeR__UserI__04E4BC85">
             <End Role="Users" EntitySet="Users" />
             <End Role="UnfreezeRequests" EntitySet="UnfreezeRequests" />
           </AssociationSet>
@@ -841,7 +842,6 @@
           <EntitySetMapping Name="Users">
             <EntityTypeMapping TypeName="UPRodionovModel.Users">
               <MappingFragment StoreEntitySet="Users">
-                <ScalarProperty Name="PhotoPath" ColumnName="PhotoPath" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Login" ColumnName="Login" />
                 <ScalarProperty Name="Password" ColumnName="Password" />
@@ -849,6 +849,7 @@
                 <ScalarProperty Name="DisplayName" ColumnName="DisplayName" />
                 <ScalarProperty Name="RoleId" ColumnName="RoleId" />
                 <ScalarProperty Name="IsFrozen" ColumnName="IsFrozen" />
+                <ScalarProperty Name="PhotoPath" ColumnName="PhotoPath" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

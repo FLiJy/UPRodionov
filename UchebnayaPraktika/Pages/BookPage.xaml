@@ -18,8 +18,8 @@
                             <TextBlock Text="Нет обложки" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="Gray"/>
              
                              <Image x:Name="ImgBookCover" 
-                           Source="{Binding CoverPath, Converter={StaticResource ImgConv}}" 
-                           Stretch="UniformToFill" />   
+             Source="{Binding CoverPath, Converter={StaticResource ImagePathConverter}}" 
+             Stretch="UniformToFill" />   
                         </Grid>
                     </Border>
 
