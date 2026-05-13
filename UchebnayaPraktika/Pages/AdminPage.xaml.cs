@@ -133,12 +133,18 @@ namespace UchebnayaPraktika
         {
             if ((sender as Button)?.Tag is Users user)
             {
+                // ЗАЩИТА: Нельзя менять роль самому себе
+                if (user.Id == Core.CurrentUser.Id)
+                {
+                    MessageBox.Show("Вы не можете изменить роль самому себе!", "Внимание", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return;
+                }
+
                 var userRole = Core.Context.Roles.FirstOrDefault(r => r.Name == "User");
                 var authorRole = Core.Context.Roles.FirstOrDefault(r => r.Name == "Author");
 
                 if (userRole != null && authorRole != null)
                 {
-                    // Меняем туда-обратно
                     user.RoleId = (user.RoleId == userRole.Id) ? authorRole.Id : userRole.Id;
                     Core.Context.SaveChanges();
                     LoadAllData();
@@ -150,9 +156,19 @@ namespace UchebnayaPraktika
         {
             if ((sender as Button)?.Tag is Users user)
             {
-                user.IsFrozen = true;
-                Core.Context.SaveChanges();
-                LoadAllData();
+                // ЗАЩИТА: Нельзя заморозить самого себя
+                if (user.Id == Core.CurrentUser.Id)
+                {
+                    MessageBox.Show("Вы не можете заморозить собственный аккаунт администратора!", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Stop);
+                    return;
+                }
+
+                if (MessageBox.Show($"Заморозить пользователя {user.Login}?", "Подтверждение", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                {
+                    user.IsFrozen = true;
+                    Core.Context.SaveChanges();
+                    LoadAllData();
+                }
             }
         }
     }

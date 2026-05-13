@@ -10,68 +10,84 @@ namespace UchebnayaPraktika
     public partial class BookPage : Page
     {
         private Books _currentBook;
-        private string _complaintType = ""; // "Book", "Author", "Review"
+        private string _complaintType = "";
         private int? _targetReviewId = null;
 
         public BookPage(Books book)
         {
             InitializeComponent();
             _currentBook = book;
-            this.DataContext = book;
+            this.DataContext = _currentBook;
+
+            // Загружаем данные (один раз, без дубликатов методов)
             LoadBookData();
             LoadReviews();
             CheckAdminRole();
-
-
         }
 
-        public class ReviewItem
-        {
-            public int Id { get; set; }
-            public string AuthorName { get; set; }
-            public int Rating { get; set; }
-            public string Comment { get; set; } // DTO свойство мапится на Text из БД
-            public DateTime? CreatedAt { get; set; }
-            public Visibility AdminButtonVisibility { get; set; }
-        }
+        // ОСТАВЛЯЕМ ТОЛЬКО ОДНУ ВЕРСИЮ ЭТОГО МЕТОДА
 
-        private void CheckAdminRole()
-        {
-            if (Core.CurrentUser != null && Core.CurrentUser.Roles?.Name == "Admin")
-            {
-                BtnFreezeBook.Visibility = Visibility.Visible;
-            }
-        }
+        //private void LoadBookData()
+        //{
+        //    if (Core.Context == null) return;
 
+        //    // Обновляем данные из БД для загрузки связей (Автора, Жанров)
+        //    _currentBook = Core.Context.Books.FirstOrDefault(b => b.Id == _currentBook.Id);
+        //    if (_currentBook == null) return;
+
+        //    // Заполнение текстовых полей
+        //    TbTitle.Text = _currentBook.Title;
+        //    TbDescription.Text = _currentBook.Description ?? "Описание отсутствует.";
+        //    TbAuthor.Text = _currentBook.Users?.DisplayName ?? "Неизвестный автор";
+
+        //    // Загрузка обложки
+        //    if (!string.IsNullOrWhiteSpace(_currentBook.CoverPath))
+        //    {
+        //        try
+        //        {
+        //            ImgBookCover.Source = new BitmapImage(new Uri(_currentBook.CoverPath, UriKind.RelativeOrAbsolute));
+        //        }
+        //        catch
+        //        {
+        //            ImgBookCover.Source = null;
+        //        }
+        //    }
+
+        //    // Текст книги
+        //    TbBookText.Text = string.IsNullOrWhiteSpace(_currentBook.Content)
+        //        ? "Текст произведения отсутствует."
+        //        : _currentBook.Content;
+
+        //    // Жанры
+        //    if (_currentBook.BookGenres != null)
+        //    {
+        //        var genres = _currentBook.BookGenres.Select(bg => bg.Genres.Name).ToList();
+        //        TbGenres.Text = genres.Any() ? string.Join(", ", genres) : "Не указаны";
+        //    }
+
+        //    // Рейтинг
+        //    if (_currentBook.Reviews != null && _currentBook.Reviews.Any())
+        //    {
+        //        TbRating.Text = _currentBook.Reviews.Average(r => r.Rating).ToString("F1");
+        //    }
+        //    else
+        //    {
+        //        TbRating.Text = "0.0";
+        //    }
+        //}
         private void LoadBookData()
         {
             if (Core.Context == null) return;
 
+            // Обновляем данные, чтобы подтянуть связи (Автора, Жанры)
             _currentBook = Core.Context.Books.FirstOrDefault(b => b.Id == _currentBook.Id);
             if (_currentBook == null) return;
 
+            // Текстовые поля
             TbTitle.Text = _currentBook.Title;
             TbDescription.Text = _currentBook.Description ?? "Описание отсутствует.";
             TbAuthor.Text = _currentBook.Users?.DisplayName ?? "Неизвестный автор";
-
-            // Подтягиваем обложку, если путь указан
-            if (!string.IsNullOrWhiteSpace(_currentBook.CoverPath))
-            {
-                try
-                {
-                    ImgBookCover.Source = new BitmapImage(new Uri(_currentBook.CoverPath, UriKind.RelativeOrAbsolute));
-                }
-                catch
-                {
-                    // Если файл удален или путь битый, оставляем пустое место
-                    ImgBookCover.Source = null;
-                }
-            }
-
-            // Читаем текст книги строго из поля Content
-            TbBookText.Text = string.IsNullOrWhiteSpace(_currentBook.Content)
-                ? "Текст произведения отсутствует."
-                : _currentBook.Content;
+            TbBookText.Text = string.IsNullOrWhiteSpace(_currentBook.Content) ? "Текст произведения отсутствует." : _currentBook.Content;
 
             // Жанры
             if (_currentBook.BookGenres != null)
@@ -85,9 +101,22 @@ namespace UchebnayaPraktika
             {
                 TbRating.Text = _currentBook.Reviews.Average(r => r.Rating).ToString("F1");
             }
-            else
+        }
+        public class ReviewItem
+        {
+            public int Id { get; set; }
+            public string AuthorName { get; set; }
+            public int Rating { get; set; }
+            public string Comment { get; set; }
+            public DateTime? CreatedAt { get; set; }
+            public Visibility AdminButtonVisibility { get; set; }
+        }
+
+        private void CheckAdminRole()
+        {
+            if (Core.CurrentUser != null && Core.CurrentUser.Roles?.Name == "Admin")
             {
-                TbRating.Text = "0.0";
+                BtnFreezeBook.Visibility = Visibility.Visible;
             }
         }
 
@@ -106,7 +135,7 @@ namespace UchebnayaPraktika
                     Id = r.Id,
                     AuthorName = r.Users?.DisplayName ?? "Пользователь",
                     Rating = r.Rating,
-                    Comment = r.Text, // Безопасный маппинг поля Text
+                    Comment = r.Text,
                     CreatedAt = r.CreatedAt,
                     AdminButtonVisibility = isAdmin ? Visibility.Visible : Visibility.Collapsed
                 }).ToList();
@@ -114,15 +143,29 @@ namespace UchebnayaPraktika
             IcReviews.ItemsSource = reviews;
         }
 
-        // --- ЧТЕНИЕ КНИГИ ---
-      
+        private void BtnRead_Click(object sender, RoutedEventArgs e)
+        {
+            // Берем актуальные данные из контекста страницы
+            var book = this.DataContext as Books;
+
+            if (book != null && !string.IsNullOrEmpty(book.Content))
+            {
+                // Создаем и открываем отдельное окно ReadWindow
+                ReadWindow readWin = new ReadWindow(book.Content, book.Title);
+                readWin.Owner = Window.GetWindow(this);
+                readWin.ShowDialog();
+            }
+            else
+            {
+                MessageBox.Show("Текст книги еще не добавлен или пуст.");
+            }
+        }
 
         private void BtnCloseReading_Click(object sender, RoutedEventArgs e)
         {
             if (PanelReading != null) PanelReading.Visibility = Visibility.Collapsed;
         }
 
-        // --- ДОБАВЛЕНИЕ ОТЗЫВА ---
         private void BtnSubmitReview_Click(object sender, RoutedEventArgs e)
         {
             if (Core.CurrentUser == null)
@@ -162,12 +205,11 @@ namespace UchebnayaPraktika
             Core.Context.SaveChanges();
 
             TbNewReviewText.Clear();
-            LoadBookData();
+            LoadBookData(); // Обновляем рейтинг
             LoadReviews();
             MessageBox.Show("Отзыв успешно добавлен!", "Успех");
         }
 
-        // --- ЖАЛОБЫ (ОТКРЫТИЕ ПАНЕЛИ) ---
         private void BtnComplainBook_Click(object sender, RoutedEventArgs e)
         {
             _complaintType = "Book";
@@ -200,7 +242,6 @@ namespace UchebnayaPraktika
             _targetReviewId = null;
         }
 
-        // --- ОТПРАВКА ЖАЛОБЫ ---
         private void BtnSubmitComplaint_Click(object sender, RoutedEventArgs e)
         {
             string reasonText = TbComplaintReason.Text.Trim();
@@ -214,7 +255,7 @@ namespace UchebnayaPraktika
             {
                 UserId = Core.CurrentUser.Id,
                 CreatedAt = DateTime.Now,
-                Reason = reasonText // Сохраняем в правильное поле БД
+                Reason = reasonText
             };
 
             if (_complaintType == "Book")
@@ -238,7 +279,6 @@ namespace UchebnayaPraktika
             MessageBox.Show("Жалоба отправлена на рассмотрение администрации.", "Успех");
         }
 
-        // --- МОДЕРАЦИЯ ---
         private void BtnFreezeBook_Click(object sender, RoutedEventArgs e)
         {
             if (MessageBox.Show("Заморозить эту книгу? Она пропадет из каталога.", "Подтверждение", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
@@ -253,23 +293,7 @@ namespace UchebnayaPraktika
                 }
             }
         }
-        private void BtnRead_Click(object sender, RoutedEventArgs e)
-        {
-            // Получаем текущую книгу из DataContext страницы
-            var book = this.DataContext as Books;
 
-            if (book != null && !string.IsNullOrEmpty(book.Content))
-            {
-                // Создаем и открываем окно
-                ReadWindow readWin = new ReadWindow(book.Content, book.Title);
-                readWin.Owner = Window.GetWindow(this); // Чтобы окно было по центру основного
-                readWin.ShowDialog();
-            }
-            else
-            {
-                MessageBox.Show("Текст книги еще не добавлен или пуст.");
-            }
-        }
         private void BtnFreezeReview_Click(object sender, RoutedEventArgs e)
         {
             if ((sender as Button)?.Tag is int reviewId)

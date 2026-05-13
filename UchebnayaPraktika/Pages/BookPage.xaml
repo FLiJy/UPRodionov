@@ -6,7 +6,6 @@
     <Grid>
         <ScrollViewer Margin="15" VerticalScrollBarVisibility="Auto">
             <StackPanel>
-
                 <Grid Margin="0,0,0,20">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="200"/>
@@ -17,11 +16,9 @@
                         <Grid>
                             <TextBlock Text="Нет обложки" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="Gray"/>
                             <Image x:Name="ImgBookCover" 
-                                Source="{Binding CoverPath, Converter={StaticResource ImagePathConverter}}" 
-                                Stretch="UniformToFill" Height="400" 
-   VerticalAlignment="Top"/>     
-                          
-                            
+                                   Source="{Binding CoverPath, Converter={StaticResource ImgConv}}" 
+                                   Stretch="Uniform" 
+                                   VerticalAlignment="Center"/>
                         </Grid>
                     </Border>
 
@@ -30,6 +27,7 @@
                         <TextBlock x:Name="TbAuthor" Foreground="DimGray" FontSize="16" Margin="0,5,0,10" FontStyle="Italic"/>
 
                         <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+                            <TextBlock Text="Название:" FontWeight="Bold"/>
                             <TextBlock Text="Рейтинг: " FontWeight="Bold"/>
                             <TextBlock Text="⭐ " Foreground="Gold"/>
                             <TextBlock x:Name="TbRating" Text="0.0" FontWeight="Bold"/>
