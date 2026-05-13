@@ -46,7 +46,7 @@
 
         <!-- Сетка книг -->
         <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
-            <ListView x:Name="LvBooks" BorderThickness="0" Background="Transparent" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+            <ListView x:Name="LvBooks" BorderThickness="0" Background="Gray" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
 
                 <!-- Задаем отображение сеткой -->
                 <ListView.ItemsPanel>
@@ -59,8 +59,8 @@
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         
-                        <Border Width="200" Height="330" Margin="10" Background="White" CornerRadius="8" 
-                                BorderBrush="#E0E0E0" BorderThickness="1">
+                        <Border Width="200" Height="330" Margin="10" Background="SaddleBrown" CornerRadius="8" 
+                                BorderBrush="SaddleBrown" BorderThickness="1">
                             <Border.Effect>
                                 <DropShadowEffect Color="Black" Opacity="0.1" BlurRadius="5" ShadowDepth="1"/>
                             </Border.Effect>

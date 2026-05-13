@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:UchebnayaPraktika"
         mc:Ignorable="d"
         Title="Чтение книги" Height="450" Width="800">
-    <Grid Margin="20">
+    <Grid Margin="20" Background="gray">
         <TextBox x:Name="TbContent" 
                  TextWrapping="Wrap" 
                  AcceptsReturn="True" 

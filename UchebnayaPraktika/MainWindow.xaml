@@ -38,18 +38,18 @@
                 <!-- Профиль -->
                 <Button x:Name="BtnProfile" Click="BtnProfile_Click" 
                         FontFamily="Segoe MDL2 Assets" Content="&#xE77B;" 
-                        FontSize="24" Height="50" Background="Transparent" Foreground="White" BorderThickness="0"
+                        FontSize="24" Height="50" Background="Transparent" Foreground="LimeGreen" BorderThickness="0"
                         ToolTip="Мой профиль"/>
                 
                 <!-- Выход -->
                 <Button x:Name="BtnLogout" Click="BtnLogout_Click" Margin="0,50,0,0"
-                        FontFamily="Segoe MDL2 Assets" Content="&#xE7E8;" 
-                        FontSize="24" Height="50" Background="Transparent" Foreground="IndianRed" BorderThickness="0"
+                        FontFamily="Segoe MDL2 Assets" Content="&#xE8BB;" 
+                        FontSize="24" Height="50" Background="Transparent" Foreground="Red" BorderThickness="0"
                         ToolTip="Выйти из аккаунта"/>
             </StackPanel>
         </Border>
 
         <!-- Контент страниц -->
-        <Frame x:Name="MainFrame" Grid.Column="1" NavigationUIVisibility="Hidden"/>
+        <Frame x:Name="MainFrame" Grid.Column="1" NavigationUIVisibility="Hidden" Background= "gray"/>
     </Grid>
 </Window>
