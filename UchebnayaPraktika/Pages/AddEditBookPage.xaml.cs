@@ -1,5 +1,6 @@
 ﻿using Microsoft.Win32;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -16,10 +17,21 @@ namespace UchebnayaPraktika
         {
             InitializeComponent();
 
-            _currentBook = book ?? new Books();
+            if (book == null)
+            {
+                // Если это новая книга
+                _currentBook = new Books();
+                _currentBook.IsFrozen = false; // Явно делаем её активной (не замороженной)
+            }
+            else
+            {
+                // Если редактируем существующую
+                _currentBook = book;
+            }
+
             DataContext = _currentBook;
 
-            // 1. Загружаем все доступные жанры в выпадающий список
+            // Загрузка жанров в ComboBox (из предыдущего шага)
             ComboGenres.ItemsSource = Core.Context.Genres.ToList();
 
             if (book != null)
@@ -27,8 +39,7 @@ namespace UchebnayaPraktika
                 TbTitle.Text = book.Title;
                 TbContent.Text = book.Content;
 
-                // 2. Если у книги уже есть жанр, выбираем его в ComboBox
-                // (Предполагаем связь многие-ко-многим через таблицу BookGenres)
+                // Установка текущего жанра в ComboBox
                 var currentGenre = book.BookGenres.FirstOrDefault()?.Genres;
                 if (currentGenre != null)
                 {
@@ -39,14 +50,13 @@ namespace UchebnayaPraktika
                 {
                     try
                     {
-                        string fullPath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, book.CoverPath.TrimStart('/', '\\'));
-                        ImgPreview.Source = new BitmapImage(new Uri(fullPath));
+                        ImgPreview.Source = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + book.CoverPath));
                     }
                     catch { }
                 }
             }
         }
-
+    
         private void BtnSelectCover_Click(object sender, RoutedEventArgs e)
         {
             OpenFileDialog op = new OpenFileDialog { Filter = "Изображения|*.jpg;*.jpeg;*.png" };
@@ -59,7 +69,7 @@ namespace UchebnayaPraktika
 
         private void BtnSave_Click(object sender, RoutedEventArgs e)
         {
-            // Валидация
+            // Проверка заполнения
             if (string.IsNullOrWhiteSpace(TbTitle.Text) || ComboGenres.SelectedItem == null)
             {
                 MessageBox.Show("Заполните название и выберите жанр!");
@@ -70,43 +80,36 @@ namespace UchebnayaPraktika
             _currentBook.Content = TbContent.Text;
             _currentBook.AuthorId = Core.CurrentUser.Id;
 
-            // Сохранение фото
+            // Сохранение обложки
             if (_selectedFilePath != null)
             {
                 _currentBook.CoverPath = FileManager.SaveImage(_selectedFilePath, "Covers");
             }
 
-            // 3. Сохранение жанра (обновляем таблицу связей BookGenres)
-            var selectedGenre = ComboGenres.SelectedItem as Genres;
-
-            // Если книга новая, создаем коллекцию связей
-            if (_currentBook.BookGenres == null) _currentBook.BookGenres = new System.Collections.Generic.List<BookGenres>();
-
-            // Удаляем старые жанры книги и добавляем новый выбранный
-            var existingGenres = Core.Context.BookGenres.Where(bg => bg.BookId == _currentBook.Id).ToList();
-            if (existingGenres.Any())
+            // Если это новая книга
+            if (_currentBook.Id == 0)
             {
-                Core.Context.BookGenres.RemoveRange(existingGenres);
+                _currentBook.IsFrozen = false; // Гарантируем статус "Активна"
+                Core.Context.Books.Add(_currentBook);
             }
 
-            _currentBook.BookGenres.Add(new BookGenres
-            {
-                Genres = selectedGenre,
-                Books = _currentBook
-            });
+            // Логика сохранения жанров (как делали раньше)
+            var selectedGenre = ComboGenres.SelectedItem as Genres;
+            var existingGenres = Core.Context.BookGenres.Where(bg => bg.BookId == _currentBook.Id).ToList();
+            if (existingGenres.Any()) Core.Context.BookGenres.RemoveRange(existingGenres);
 
-            if (_currentBook.Id == 0)
-                Core.Context.Books.Add(_currentBook);
+            if (_currentBook.BookGenres == null) _currentBook.BookGenres = new List<BookGenres>();
+            _currentBook.BookGenres.Add(new BookGenres { Genres = selectedGenre, Books = _currentBook });
 
             try
             {
                 Core.Context.SaveChanges();
-                MessageBox.Show("Данные сохранены!");
+                MessageBox.Show("Книга успешно опубликована и сохранена!");
                 NavigationService.GoBack();
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Ошибка при сохранении: " + ex.Message);
+                MessageBox.Show("Ошибка: " + ex.Message);
             }
         }
     }
