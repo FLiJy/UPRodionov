@@ -37,7 +37,23 @@ namespace UchebnayaPraktika
                 ImgPreview.Source = new BitmapImage(new Uri(_selectedFilePath));
             }
         }
+        private void BtnRead_Click(object sender, RoutedEventArgs e)
+        {
+            // Получаем текущую книгу из DataContext страницы
+            var book = this.DataContext as Books;
 
+            if (book != null && !string.IsNullOrEmpty(book.Content))
+            {
+                // Создаем и открываем окно
+                ReadWindow readWin = new ReadWindow(book.Content, book.Title);
+                readWin.Owner = Window.GetWindow(this); // Чтобы окно было по центру основного
+                readWin.ShowDialog();
+            }
+            else
+            {
+                MessageBox.Show("Текст книги еще не добавлен или пуст.");
+            }
+        }
         private void BtnSave_Click(object sender, RoutedEventArgs e)
         {
             _currentBook.Title = TbTitle.Text;

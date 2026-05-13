@@ -7,7 +7,7 @@
         <conv:FreezeConverter x:Key="FreezeConverter"/>
         <conv:FreezeColorConverter x:Key="FreezeColorConverter"/>
         <conv:VisibilityConverter x:Key="VisibilityConverter"/>
-
+        <conv:ImagePathConverter x:Key="ImgConv"/>
         <conv:ImagePathConverter x:Key="ImagePathConverter"/>
     </Application.Resources>
 </Application>

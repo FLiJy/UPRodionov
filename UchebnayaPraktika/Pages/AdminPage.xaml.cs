@@ -109,6 +109,7 @@ namespace UchebnayaPraktika
                     req.Users.IsFrozen = false;
                 }
 
+
                 Core.Context.UnfreezeRequests.Remove(req);
                 Core.Context.SaveChanges();
 

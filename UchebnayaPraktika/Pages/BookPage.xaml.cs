@@ -17,7 +17,7 @@ namespace UchebnayaPraktika
         {
             InitializeComponent();
             _currentBook = book;
-
+            this.DataContext = book;
             LoadBookData();
             LoadReviews();
             CheckAdminRole();
@@ -115,10 +115,7 @@ namespace UchebnayaPraktika
         }
 
         // --- ЧТЕНИЕ КНИГИ ---
-        private void BtnRead_Click(object sender, RoutedEventArgs e)
-        {
-            if (PanelReading != null) PanelReading.Visibility = Visibility.Visible;
-        }
+      
 
         private void BtnCloseReading_Click(object sender, RoutedEventArgs e)
         {
@@ -256,7 +253,23 @@ namespace UchebnayaPraktika
                 }
             }
         }
+        private void BtnRead_Click(object sender, RoutedEventArgs e)
+        {
+            // Получаем текущую книгу из DataContext страницы
+            var book = this.DataContext as Books;
 
+            if (book != null && !string.IsNullOrEmpty(book.Content))
+            {
+                // Создаем и открываем окно
+                ReadWindow readWin = new ReadWindow(book.Content, book.Title);
+                readWin.Owner = Window.GetWindow(this); // Чтобы окно было по центру основного
+                readWin.ShowDialog();
+            }
+            else
+            {
+                MessageBox.Show("Текст книги еще не добавлен или пуст.");
+            }
+        }
         private void BtnFreezeReview_Click(object sender, RoutedEventArgs e)
         {
             if ((sender as Button)?.Tag is int reviewId)
