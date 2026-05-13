@@ -3,15 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-using UchebnayaPraktika;
+using System.Windows.Media.Imaging;
 
 namespace UchebnayaPraktika
 {
     public partial class BookPage : Page
     {
         private Books _currentBook;
-
-        // Переменные для отслеживания, на что именно подается жалоба в Overlay-панели
         private string _complaintType = ""; // "Book", "Author", "Review"
         private int? _targetReviewId = null;
 
@@ -23,15 +21,16 @@ namespace UchebnayaPraktika
             LoadBookData();
             LoadReviews();
             CheckAdminRole();
+
+
         }
 
-        // DTO-класс для вывода отзывов с учетом видимости кнопок администратора
         public class ReviewItem
         {
             public int Id { get; set; }
             public string AuthorName { get; set; }
             public int Rating { get; set; }
-            public string Comment { get; set; }
+            public string Comment { get; set; } // DTO свойство мапится на Text из БД
             public DateTime? CreatedAt { get; set; }
             public Visibility AdminButtonVisibility { get; set; }
         }
@@ -46,25 +45,43 @@ namespace UchebnayaPraktika
 
         private void LoadBookData()
         {
-            // Обновляем сущность из контекста на случай изменений
+            if (Core.Context == null) return;
+
             _currentBook = Core.Context.Books.FirstOrDefault(b => b.Id == _currentBook.Id);
             if (_currentBook == null) return;
 
             TbTitle.Text = _currentBook.Title;
-            // Замените .Description на ваше поле из БД, если оно называется иначе
             TbDescription.Text = _currentBook.Description ?? "Описание отсутствует.";
             TbAuthor.Text = _currentBook.Users?.DisplayName ?? "Неизвестный автор";
 
-            // Предполагается, что текст книги хранится в поле TextContent или аналогичном
-            // Если текст хранится в файле, здесь должна быть логика считывания файла
-            TbBookText.Text = "Здесь отображается полный текст произведения...\n\n" + (_currentBook.Description ?? "");
+            // Подтягиваем обложку, если путь указан
+            if (!string.IsNullOrWhiteSpace(_currentBook.CoverPath))
+            {
+                try
+                {
+                    ImgBookCover.Source = new BitmapImage(new Uri(_currentBook.CoverPath, UriKind.RelativeOrAbsolute));
+                }
+                catch
+                {
+                    // Если файл удален или путь битый, оставляем пустое место
+                    ImgBookCover.Source = null;
+                }
+            }
 
-            // Получаем жанры через промежуточную таблицу BookGenres
-            var genres = _currentBook.BookGenres.Select(bg => bg.Genres.Name).ToList();
-            TbGenres.Text = genres.Any() ? string.Join(", ", genres) : "Не указаны";
+            // Читаем текст книги строго из поля Content
+            TbBookText.Text = string.IsNullOrWhiteSpace(_currentBook.Content)
+                ? "Текст произведения отсутствует."
+                : _currentBook.Content;
 
-            // Считаем рейтинг
-            if (_currentBook.Reviews.Any())
+            // Жанры
+            if (_currentBook.BookGenres != null)
+            {
+                var genres = _currentBook.BookGenres.Select(bg => bg.Genres.Name).ToList();
+                TbGenres.Text = genres.Any() ? string.Join(", ", genres) : "Не указаны";
+            }
+
+            // Рейтинг
+            if (_currentBook.Reviews != null && _currentBook.Reviews.Any())
             {
                 TbRating.Text = _currentBook.Reviews.Average(r => r.Rating).ToString("F1");
             }
@@ -76,9 +93,10 @@ namespace UchebnayaPraktika
 
         private void LoadReviews()
         {
+            if (IcReviews == null || Core.Context == null) return;
+
             bool isAdmin = Core.CurrentUser != null && Core.CurrentUser.Roles?.Name == "Admin";
 
-            // Замените .Text и .CreatedAt на ваши названия полей из таблицы Reviews, если они отличаются
             var reviews = Core.Context.Reviews
                 .Where(r => r.BookId == _currentBook.Id)
                 .OrderByDescending(r => r.CreatedAt)
@@ -88,7 +106,7 @@ namespace UchebnayaPraktika
                     Id = r.Id,
                     AuthorName = r.Users?.DisplayName ?? "Пользователь",
                     Rating = r.Rating,
-                    Comment = r.Text, // Поле текста отзыва
+                    Comment = r.Text, // Безопасный маппинг поля Text
                     CreatedAt = r.CreatedAt,
                     AdminButtonVisibility = isAdmin ? Visibility.Visible : Visibility.Collapsed
                 }).ToList();
@@ -97,33 +115,40 @@ namespace UchebnayaPraktika
         }
 
         // --- ЧТЕНИЕ КНИГИ ---
-        private void BtnRead_Click(object sender, RoutedEventArgs e) => PanelReading.Visibility = Visibility.Visible;
-        private void BtnCloseReading_Click(object sender, RoutedEventArgs e) => PanelReading.Visibility = Visibility.Collapsed;
+        private void BtnRead_Click(object sender, RoutedEventArgs e)
+        {
+            if (PanelReading != null) PanelReading.Visibility = Visibility.Visible;
+        }
+
+        private void BtnCloseReading_Click(object sender, RoutedEventArgs e)
+        {
+            if (PanelReading != null) PanelReading.Visibility = Visibility.Collapsed;
+        }
 
         // --- ДОБАВЛЕНИЕ ОТЗЫВА ---
         private void BtnSubmitReview_Click(object sender, RoutedEventArgs e)
         {
             if (Core.CurrentUser == null)
             {
-                MessageBox.Show("Только авторизованные пользователи могут оставлять отзывы.");
+                MessageBox.Show("Только авторизованные пользователи могут оставлять отзывы.", "Ошибка");
                 return;
             }
 
             string text = TbNewReviewText.Text.Trim();
             if (string.IsNullOrWhiteSpace(text))
             {
-                MessageBox.Show("Напишите текст отзыва.");
+                MessageBox.Show("Напишите текст отзыва.", "Внимание");
                 return;
             }
 
-            // Парсим оценку (от 1 до 10 согласно ограничению БД)
             int rating = CbNewRating.SelectedIndex + 1;
 
-            // Проверяем, не оставлял ли пользователь уже отзыв
-            var existingReview = Core.Context.Reviews.FirstOrDefault(r => r.BookId == _currentBook.Id && r.UserId == Core.CurrentUser.Id);
+            var existingReview = Core.Context.Reviews
+                .FirstOrDefault(r => r.BookId == _currentBook.Id && r.UserId == Core.CurrentUser.Id);
+
             if (existingReview != null)
             {
-                MessageBox.Show("Вы уже оставляли отзыв на эту книгу.");
+                MessageBox.Show("Вы уже оставляли отзыв на эту книгу.", "Внимание");
                 return;
             }
 
@@ -132,7 +157,7 @@ namespace UchebnayaPraktika
                 BookId = _currentBook.Id,
                 UserId = Core.CurrentUser.Id,
                 Rating = rating,
-                Text = text, // Замените на ваше поле текста
+                Text = text,
                 CreatedAt = DateTime.Now
             };
 
@@ -140,12 +165,12 @@ namespace UchebnayaPraktika
             Core.Context.SaveChanges();
 
             TbNewReviewText.Clear();
-            LoadBookData(); // Обновит средний рейтинг
-            LoadReviews();  // Обновит список
-            MessageBox.Show("Отзыв успешно добавлен!");
+            LoadBookData();
+            LoadReviews();
+            MessageBox.Show("Отзыв успешно добавлен!", "Успех");
         }
 
-        // --- СИСТЕМА ЖАЛОБ (ОТКРЫТИЕ ПАНЕЛИ) ---
+        // --- ЖАЛОБЫ (ОТКРЫТИЕ ПАНЕЛИ) ---
         private void BtnComplainBook_Click(object sender, RoutedEventArgs e)
         {
             _complaintType = "Book";
@@ -162,11 +187,10 @@ namespace UchebnayaPraktika
 
         private void BtnComplainReview_Click(object sender, RoutedEventArgs e)
         {
-            Button btn = sender as Button;
-            if (btn != null && btn.Tag != null)
+            if ((sender as Button)?.Tag is int revId)
             {
                 _complaintType = "Review";
-                _targetReviewId = (int)btn.Tag;
+                _targetReviewId = revId;
                 TbComplaintTitle.Text = "Жалоба на отзыв";
                 OverlayComplaint.Visibility = Visibility.Visible;
             }
@@ -179,22 +203,21 @@ namespace UchebnayaPraktika
             _targetReviewId = null;
         }
 
-        // --- ОТПРАВКА ЖАЛОБЫ В БД ---
+        // --- ОТПРАВКА ЖАЛОБЫ ---
         private void BtnSubmitComplaint_Click(object sender, RoutedEventArgs e)
         {
-            string reason = TbComplaintReason.Text.Trim();
-            if (string.IsNullOrWhiteSpace(reason))
+            string reasonText = TbComplaintReason.Text.Trim();
+            if (string.IsNullOrWhiteSpace(reasonText))
             {
-                MessageBox.Show("Опишите причину жалобы.");
+                MessageBox.Show("Опишите причину жалобы.", "Внимание");
                 return;
             }
 
             Complaints newComplaint = new Complaints
             {
                 UserId = Core.CurrentUser.Id,
-                CreatedAt = DateTime.Now
-                // Поле Reason/Message добавьте сюда, если оно есть в вашей таблице Complaints:
-                // Reason = reason 
+                CreatedAt = DateTime.Now,
+                Reason = reasonText // Сохраняем в правильное поле БД
             };
 
             if (_complaintType == "Book")
@@ -203,10 +226,8 @@ namespace UchebnayaPraktika
             }
             else if (_complaintType == "Author")
             {
-                // Привязываем к книге, но помечаем в тексте, что это на автора
                 newComplaint.BookId = _currentBook.Id;
-                // Если есть поле текста жалобы, раскомментируйте:
-                // newComplaint.Reason = "НА АВТОРА: " + reason;
+                newComplaint.Reason = "НА АВТОРА: " + reasonText;
             }
             else if (_complaintType == "Review" && _targetReviewId.HasValue)
             {
@@ -216,20 +237,19 @@ namespace UchebnayaPraktika
             Core.Context.Complaints.Add(newComplaint);
             Core.Context.SaveChanges();
 
-            BtnCancelComplaint_Click(null, null); // Скрываем и очищаем панель
-            MessageBox.Show("Жалоба отправлена на рассмотрение администрации.");
+            BtnCancelComplaint_Click(null, null);
+            MessageBox.Show("Жалоба отправлена на рассмотрение администрации.", "Успех");
         }
 
-        // --- ФУНКЦИИ АДМИНИСТРАТОРА ---
+        // --- МОДЕРАЦИЯ ---
         private void BtnFreezeBook_Click(object sender, RoutedEventArgs e)
         {
-            if (MessageBox.Show("Вы уверены, что хотите заморозить эту книгу? Она пропадет из общего каталога.", "Подтверждение", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
+            if (MessageBox.Show("Заморозить эту книгу? Она пропадет из каталога.", "Подтверждение", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
             {
                 _currentBook.IsFrozen = true;
                 Core.Context.SaveChanges();
-                MessageBox.Show("Книга заморожена.");
+                MessageBox.Show("Книга заморожена.", "Успех");
 
-                // Возвращаемся в каталог
                 if (this.Parent is Frame frame)
                 {
                     frame.Navigate(new CatalogPage());
@@ -239,20 +259,15 @@ namespace UchebnayaPraktika
 
         private void BtnFreezeReview_Click(object sender, RoutedEventArgs e)
         {
-            Button btn = sender as Button;
-            if (btn != null && btn.Tag != null)
+            if ((sender as Button)?.Tag is int reviewId)
             {
-                int reviewId = (int)btn.Tag;
                 var review = Core.Context.Reviews.FirstOrDefault(r => r.Id == reviewId);
 
-                if (review != null && MessageBox.Show("Заморозить/удалить этот отзыв?", "Модерация", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                if (review != null && MessageBox.Show("Удалить этот отзыв?", "Модерация", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
                 {
-                    // ПРИМЕЧАНИЕ: В SQL скрипте у таблицы Reviews нет поля IsFrozen.
-                    // Если у вас в модели оно создано вручную, используйте: review.IsFrozen = true;
-                    // Иначе просто удаляем отзыв из БД:
                     Core.Context.Reviews.Remove(review);
-
                     Core.Context.SaveChanges();
+
                     LoadBookData();
                     LoadReviews();
                 }

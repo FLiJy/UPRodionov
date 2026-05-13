@@ -7,8 +7,6 @@
       mc:Ignorable="d" 
       Title="AuthorPage">
 
-
-
     <Grid Margin="20">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -25,7 +23,6 @@
                   IsReadOnly="True" GridLinesVisibility="None" Background="White">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Название" Binding="{Binding Title}" Width="*"/>
-
                 <DataGridTextColumn Header="Отзывов" Binding="{Binding Reviews.Count}" Width="80"/>
 
                 <DataGridTemplateColumn Header="Статус" Width="130">
@@ -43,7 +40,6 @@
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal">
                                 <Button Content="Редактировать" Margin="5,2" Width="100" Click="BtnEdit_Click" Tag="{Binding}"/>
-
                                 <Button Content="Оспорить" Margin="5,2" Width="80" 
                                         Visibility="{Binding IsFrozen, Converter={StaticResource VisibilityConverter}}" 
                                         Click="BtnAppealBook_Click" Tag="{Binding}" Background="GhostWhite"/>

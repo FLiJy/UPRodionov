@@ -13,8 +13,14 @@
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
 
-                    <Border Grid.Column="0" Height="280" Background="#ECECEC" CornerRadius="8" BorderBrush="#DDD" BorderThickness="1">
-                        <TextBlock Text="Обложка" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="Gray"/>
+                    <Border Grid.Column="0" Height="280" Background="#ECECEC" CornerRadius="8" BorderBrush="#DDD" BorderThickness="1" ClipToBounds="True">
+                        <Grid>
+                            <TextBlock Text="Нет обложки" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="Gray"/>
+             
+                             <Image x:Name="ImgBookCover" 
+                           Source="{Binding CoverPath, Converter={StaticResource ImgConv}}" 
+                           Stretch="UniformToFill" />   
+                        </Grid>
                     </Border>
 
                     <StackPanel Grid.Column="1" Margin="20,0,0,0">

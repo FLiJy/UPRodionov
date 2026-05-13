@@ -32,6 +32,7 @@ namespace UchebnayaPraktika
         public string DisplayName { get; set; }
         public int RoleId { get; set; }
         public Nullable<bool> IsFrozen { get; set; }
+        public string PhotoPath { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Books> Books { get; set; }

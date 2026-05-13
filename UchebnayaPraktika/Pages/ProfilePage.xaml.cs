@@ -1,63 +1,64 @@
-﻿using System;
-using System.Linq;
+﻿using Microsoft.Win32;
+using System;
 using System.Windows;
 using System.Windows.Controls;
-using UchebnayaPraktika;
+using System.Windows.Media.Imaging;
 
 namespace UchebnayaPraktika
 {
     public partial class ProfilePage : Page
-    {
-        public ProfilePage()
+{
+    public ProfilePage()
         {
             InitializeComponent();
             LoadUserData();
-        }
+            Loaded += ProfilePage_Loaded; // Событие при каждом открытии страницы
+    }
+
+    private void ProfilePage_Loaded(object sender, RoutedEventArgs e)
+    {
+        // 1. Принудительно обновляем данные текущего юзера из БД
+        Core.Context.Entry(Core.CurrentUser).Reload();
+
+        // 2. Устанавливаем DataContext страницы, чтобы XAML увидел статус IsFrozen
+        DataContext = Core.CurrentUser;
+    }
 
         private void LoadUserData()
         {
             var user = Core.CurrentUser;
-            if (user == null) return;
-
             TbDisplayName.Text = user.DisplayName;
-            TbLogin.Text = user.Login;
-            TbEmail.Text = user.Email;
-            TbRole.Text = user.Roles?.Name ?? "Пользователь";
 
-            // Проверка заморозки
-            if (user.IsFrozen == true)
+            if (!string.IsNullOrEmpty(user.PhotoPath))
             {
-                BorderFrozen.Visibility = Visibility.Visible;
+                try
+                {
+                    ImgAvatar.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + user.PhotoPath));
+                }
+                catch { /* игнорируем ошибку если файл удален */ }
             }
-
-            // Кнопка автора (показываем только обычным пользователям)
-            if (user.Roles?.Name == "User")
-            {
-                var request = Core.Context.RoleRequests.FirstOrDefault(r => r.UserId == user.Id && r.Status == "Pending");
-                if (request != null) TbAuthorStatus.Visibility = Visibility.Visible;
-                else BtnRequestAuthor.Visibility = Visibility.Visible;
-            }
-
-            // Загрузка отзывов
-            IcMyReviews.ItemsSource = Core.Context.Reviews.Where(r => r.UserId == user.Id).ToList();
         }
 
-        private void BtnRequestAuthor_Click(object sender, RoutedEventArgs e)
+        private void BtnChangePhoto_Click(object sender, RoutedEventArgs e)
         {
-            RoleRequests req = new RoleRequests { UserId = Core.CurrentUser.Id, Status = "Pending", CreatedAt = DateTime.Now };
-            Core.Context.RoleRequests.Add(req);
-            Core.Context.SaveChanges();
-            MessageBox.Show("Заявка отправлена!");
-            LoadUserData();
+            OpenFileDialog op = new OpenFileDialog { Filter = "Изображения|*.jpg;*.jpeg;*.png" };
+            if (op.ShowDialog() == true)
+            {
+                // Сразу сохраняем файл и обновляем путь в текущем юзере
+                string path = FileManager.SaveImage(op.FileName, "Avatars");
+                if (path != null)
+                {
+                    Core.CurrentUser.PhotoPath = path;
+                    ImgAvatar.ImageSource = new BitmapImage(new Uri(op.FileName));
+                }
+            }
         }
 
-        private void BtnAppealAccount_Click(object sender, RoutedEventArgs e)
+        private void BtnSaveProfile_Click(object sender, RoutedEventArgs e)
         {
-            // Упрощенная логика подачи апелляции
-            UnfreezeRequests req = new UnfreezeRequests { UserId = Core.CurrentUser.Id, CreatedAt = DateTime.Now };
-            Core.Context.UnfreezeRequests.Add(req);
+            Core.CurrentUser.DisplayName = TbDisplayName.Text;
             Core.Context.SaveChanges();
-            MessageBox.Show("Запрос на разморозку отправлен.");
+            MessageBox.Show("Профиль обновлен!");
         }
     }
 }
