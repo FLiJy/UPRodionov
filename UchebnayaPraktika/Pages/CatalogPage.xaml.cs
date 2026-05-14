@@ -17,7 +17,6 @@ namespace UchebnayaPraktika
             UpdateBooks();
         }
 
-        // Вспомогательный класс для удобного отображения в карточке
         public class BookCard
         {
             public int Id { get; set; }
@@ -25,14 +24,12 @@ namespace UchebnayaPraktika
             public string CoverPath { get; set; }
             public string AuthorName { get; set; }
             public double AverageRating { get; set; }
-            // Можно добавить ссылку на саму сущность, если нужно
             public Books OriginalBook { get; set; }
         }
 
         private void LoadGenres()
         {
             var genres = Core.Context.Genres.ToList();
-            // Добавляем пункт "Все жанры" на первое место
             genres.Insert(0, new Genres { Id = 0, Name = "Все жанры" });
             CbGenres.ItemsSource = genres;
             CbGenres.SelectedIndex = 0;
@@ -42,25 +39,23 @@ namespace UchebnayaPraktika
         {
             if (Core.Context == null) return;
 
-            // Берем только незамороженные книги (по ТЗ замороженные доступны админам или автору)
+            // Берем только незамороженные книги 
             var query = Core.Context.Books.Where(b => b.IsFrozen == false).AsQueryable();
 
-            // 1. Поиск (по названию или автору)
+            // 1.Поиск по названию или автору
             string searchText = TbSearch.Text.ToLower();
             if (!string.IsNullOrWhiteSpace(searchText))
             {
-                // Замените b.Users.DisplayName на ваше навигационное свойство автора, если EF назвал его иначе (например, b.User)
                 query = query.Where(b => b.Title.ToLower().Contains(searchText) ||
                                          (b.Users != null && b.Users.DisplayName.ToLower().Contains(searchText)));
             }
 
-            // 2. Фильтрация по жанру
+            // 2.Фильтрация по жанру
             if (CbGenres.SelectedItem is Genres selectedGenre && selectedGenre.Id != 0)
             {
                 query = query.Where(b => b.BookGenres.Any(bg => bg.GenreId == selectedGenre.Id));
             }
 
-            // Выгружаем данные в память для формирования карточек (чтобы посчитать рейтинг)
             var booksList = query.ToList();
 
             var bookCards = booksList.Select(b => new BookCard
@@ -70,7 +65,7 @@ namespace UchebnayaPraktika
                 CoverPath = b.CoverPath,
                 AuthorName = b.Users?.DisplayName ?? "Неизвестный автор",
                 OriginalBook = b,
-                // Считаем среднюю оценку, если отзывы есть, иначе 0
+                // Считаем среднюю оценку
                 AverageRating = b.Reviews.Any() ? b.Reviews.Average(r => r.Rating) : 0
             }).ToList();
 
@@ -100,8 +95,6 @@ namespace UchebnayaPraktika
 
         private void TbSearch_TextChanged(object sender, TextChangedEventArgs e) => UpdateBooks();
         private void Filter_SelectionChanged(object sender, SelectionChangedEventArgs e) => UpdateBooks();
-
-        // Открытие страницы книги
         private void BtnOpenBook_Click(object sender, RoutedEventArgs e)
         {
             Button btn = sender as Button;
@@ -112,16 +105,15 @@ namespace UchebnayaPraktika
                 if (book != null)
                 {
                     NavigationService.Navigate(new BookPage(book));
-                    MessageBox.Show($"Тут откроется страница книги: {book.Title}");
                 }
             }
         }
 
-        // Добавление в списки ("Заброшено", "В планах", "Читаю", "Прочитано")
+        // Добавление в списки 
         private void CbAddToList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             ComboBox cb = sender as ComboBox;
-            if (cb == null || cb.SelectedIndex <= 0) return; // Пропускаем "В список..."
+            if (cb == null || cb.SelectedIndex <= 0) return; 
 
             int bookId = (int)cb.Tag;
             string status = "";

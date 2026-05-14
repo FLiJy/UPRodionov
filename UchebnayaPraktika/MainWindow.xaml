@@ -4,44 +4,37 @@
         Title="Читай, Пиши и не спиши" Height="600" Width="900" WindowStartupLocation="CenterScreen">
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="60"/> <!-- Sidebar -->
-            <ColumnDefinition Width="*"/>  <!-- Main Content -->
+            <ColumnDefinition Width="60"/> 
+            <ColumnDefinition Width="*"/>  
         </Grid.ColumnDefinitions>
 
-        <!-- Sidebar -->
         <Border Grid.Column="0" Background="#2D2D30">
             <StackPanel Margin="0,20,0,0">
-                <!-- Каталог -->
                 <Button x:Name="BtnCatalog" Click="BtnCatalog_Click" 
                         FontFamily="Segoe MDL2 Assets" Content="&#xE8F1;" 
-                        FontSize="24" Height="50" Background="Transparent" Foreground="White" BorderThickness="0"
+                        FontSize="24" Height="50" Background="Transparent" Foreground="DarkOrange" BorderThickness="0"
                         ToolTip="Каталог книг"/>
                 
-                <!-- Списки книг -->
                 <Button x:Name="BtnLists" Click="BtnLists_Click" 
                         FontFamily="Segoe MDL2 Assets" Content="&#xE8FD;" 
-                        FontSize="24" Height="50" Background="Transparent" Foreground="White" BorderThickness="0"
+                        FontSize="24" Height="50" Background="Transparent" Foreground="LightPink" BorderThickness="0"
                         ToolTip="Мои списки книг"/>
                 
-                <!-- Страница автора -->
                 <Button x:Name="BtnAuthor" Click="BtnAuthor_Click" Visibility="Collapsed"
                         FontFamily="Segoe MDL2 Assets" Content="&#xE70F;" 
                         FontSize="24" Height="50" Background="Transparent" Foreground="White" BorderThickness="0"
                         ToolTip="Кабинет автора"/>
                 
-                <!-- Администрирование -->
                 <Button x:Name="BtnAdmin" Click="BtnAdmin_Click" Visibility="Collapsed"
                         FontFamily="Segoe MDL2 Assets" Content="&#xE713;" 
                         FontSize="24" Height="50" Background="Transparent" Foreground="White" BorderThickness="0"
                         ToolTip="Администрирование"/>
 
-                <!-- Профиль -->
                 <Button x:Name="BtnProfile" Click="BtnProfile_Click" 
                         FontFamily="Segoe MDL2 Assets" Content="&#xE77B;" 
                         FontSize="24" Height="50" Background="Transparent" Foreground="LimeGreen" BorderThickness="0"
                         ToolTip="Мой профиль"/>
                 
-                <!-- Выход -->
                 <Button x:Name="BtnLogout" Click="BtnLogout_Click" Margin="0,50,0,0"
                         FontFamily="Segoe MDL2 Assets" Content="&#xE8BB;" 
                         FontSize="24" Height="50" Background="Transparent" Foreground="Red" BorderThickness="0"
@@ -49,7 +42,6 @@
             </StackPanel>
         </Border>
 
-        <!-- Контент страниц -->
         <Frame x:Name="MainFrame" Grid.Column="1" NavigationUIVisibility="Hidden" Background= "gray"/>
     </Grid>
 </Window>

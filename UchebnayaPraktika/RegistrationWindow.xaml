@@ -1,28 +1,28 @@
 ﻿<Window x:Class="UchebnayaPraktika.RegistrationWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Регистрация" Height="500" Width="500" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
-    <Grid Margin="25">
+        Title="Регистрация" Height="500" Width="500" WindowStartupLocation="CenterScreen" Background="gray" ResizeMode="NoResize">
+    <Grid Margin="25" Background="Gray">
         <StackPanel VerticalAlignment="Center">
             <TextBlock Text="Создание аккаунта" FontSize="22" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,0,0,20"/>
 
-            <TextBlock Text="Имя (отображаемое):" Foreground="Gray"/>
+            <TextBlock Text="Имя (отображаемое):" />
             <TextBox x:Name="TbName" Margin="0,5,0,10" Height="25"/>
 
-            <TextBlock Text="Логин:" Foreground="Gray"/>
+            <TextBlock Text="Логин:" />
             <TextBox x:Name="TbLogin" Margin="0,5,0,10" Height="25"/>
 
-            <TextBlock Text="Email:" Foreground="Gray"/>
+            <TextBlock Text="Email:" />
             <TextBox x:Name="TbEmail" Margin="0,5,0,10" Height="25"/>
 
-            <TextBlock Text="Пароль:" Foreground="Gray"/>
+            <TextBlock Text="Пароль:" />
             <PasswordBox x:Name="PbPassword" Margin="0,5,0,10" Height="25"/>
 
-            <TextBlock Text="Подтвердите пароль:" Foreground="Gray"/>
+            <TextBlock Text="Подтвердите пароль:" />
             <PasswordBox x:Name="PbConfirm" Margin="0,5,0,20" Height="25"/>
 
-            <Button Content="Зарегистрироваться" Height="35" Background="#2E8B57" Foreground="White" Click="BtnRegister_Click"/>
-            <Button Content="Назад ко входу" Height="30" Margin="0,10,0,0" Background="Transparent" BorderThickness="0" Foreground="Gray" Click="BtnBack_Click"/>
+            <Button Content="Зарегистрироваться" Height="35" Background="LimeGreen" Foreground="White" Click="BtnRegister_Click"/>
+            <Button Content="Назад ко входу" Height="30" Margin="0,10,0,0" Foreground="White" FontWeight="Black"  Background="IndianRed" BorderThickness="0"  Click="BtnBack_Click"/>
         </StackPanel>
     </Grid>
 </Window>

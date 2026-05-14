@@ -14,9 +14,7 @@ using System.Windows.Shapes;
 
 namespace UchebnayaPraktika
 {
-    /// <summary>
-    /// Логика взаимодействия для ReadWindow.xaml
-    /// </summary>
+ 
     public partial class ReadWindow : Window
     {
         public ReadWindow(string content, string title)

@@ -4,7 +4,7 @@ using System.Windows;
 using System.Windows.Data;
 using System.Windows.Media;
 
-namespace UchebnayaPraktika.Converters // <-- Добавили .Converters
+namespace UchebnayaPraktika.Converters 
 {
     public class FreezeConverter : IValueConverter
     {
@@ -39,13 +39,11 @@ namespace UchebnayaPraktika.Converters // <-- Добавили .Converters
                 isVisible = b;
             }
 
-            // Если из XAML передали параметр "invert", меняем логику на противоположную
             if (parameter != null && parameter.ToString() == "invert")
             {
                 isVisible = !isVisible;
             }
 
-            // Обязательно возвращаем строгий тип Visibility, иначе XDG-000 будет ругаться
             return isVisible ? Visibility.Visible : Visibility.Collapsed;
         }
 

@@ -12,19 +12,17 @@ namespace UchebnayaPraktika
 
             try
             {
-                // Путь к папке внутри bin/Debug/Images/folderName
+
                 string baseDir = AppDomain.CurrentDomain.BaseDirectory;
                 string targetDir = Path.Combine(baseDir, "Images", folderName);
 
                 if (!Directory.Exists(targetDir)) Directory.CreateDirectory(targetDir);
 
-                // Генерируем уникальное имя, чтобы избежать совпадений
                 string fileName = Guid.NewGuid().ToString() + Path.GetExtension(sourcePath);
                 string destPath = Path.Combine(targetDir, fileName);
 
                 File.Copy(sourcePath, destPath);
 
-                // Возвращаем относительный путь для БД
                 return $"/Images/{folderName}/{fileName}";
             }
             catch (Exception ex)

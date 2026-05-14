@@ -11,27 +11,21 @@
     <Grid Margin="15">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
-            <!-- Панель поиска и фильтров -->
             <RowDefinition Height="*"/>
-            <!-- Сетка книг -->
         </Grid.RowDefinitions>
 
-        <!-- Верхняя панель: Поиск, Сортировка, Фильтрация -->
         <WrapPanel Grid.Row="0" Margin="0,0,0,15" VerticalAlignment="Center">
 
-            <!-- Поиск -->
             <StackPanel Margin="0,0,15,10">
                 <TextBlock Text="Поиск (название или автор):" Foreground="Gray" Margin="0,0,0,5"/>
                 <TextBox x:Name="TbSearch" Width="250" Height="25" TextChanged="TbSearch_TextChanged"/>
             </StackPanel>
 
-            <!-- Жанры -->
             <StackPanel Margin="0,0,15,10">
                 <TextBlock Text="Жанр:" Foreground="Gray" Margin="0,0,0,5"/>
                 <ComboBox x:Name="CbGenres" Width="150" Height="25" SelectionChanged="Filter_SelectionChanged" DisplayMemberPath="Name"/>
             </StackPanel>
 
-            <!-- Сортировка -->
             <StackPanel Margin="0,0,15,10">
                 <TextBlock Text="Сортировка:" Foreground="Gray" Margin="0,0,0,5"/>
                 <ComboBox x:Name="CbSort" Width="180" Height="25" SelectionChanged="Filter_SelectionChanged">
@@ -44,18 +38,14 @@
 
         </WrapPanel>
 
-        <!-- Сетка книг -->
         <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
             <ListView x:Name="LvBooks" BorderThickness="0" Background="Gray" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
-
-                <!-- Задаем отображение сеткой -->
                 <ListView.ItemsPanel>
                     <ItemsPanelTemplate>
                         <WrapPanel Orientation="Horizontal" HorizontalAlignment="Left"/>
                     </ItemsPanelTemplate>
                 </ListView.ItemsPanel>
-
-                <!-- Внешний вид одной карточки книги -->
+                
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         
@@ -68,25 +58,35 @@
                             <Grid Margin="10">
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="150"/>
-                                    <!-- Обложка -->
                                     <RowDefinition Height="*"/>
-                                    <!-- Инфа -->
                                     <RowDefinition Height="Auto"/>
-                                    <!-- Кнопки -->
                                 </Grid.RowDefinitions>
                                                                 
-                                <!-- Заглушка для обложки (если нет CoverPath) -->
-                                
                                 <Border Background="#ECECEC" CornerRadius="4">
                                     <Grid>
                                         <Image x:Name="ImgBookCover" 
-             Source="{Binding CoverPath, Converter={StaticResource ImagePathConverter}}" 
-             Stretch="UniformToFill" />
-                                        <TextBlock Text="Нет обложки" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="Gray"/>
-
-                                              
-                                      </Grid>
-                        </Border>
+                                         Source="{Binding CoverPath, Converter={StaticResource ImagePathConverter}}" 
+                                         Stretch="Uniform" />
+                                        <TextBlock Text="Нет обложки" 
+                                                   VerticalAlignment="Center" 
+                                                   HorizontalAlignment="Center" 
+                                                   Foreground="Gray">
+                                            <TextBlock.Style>
+                                                <Style TargetType="TextBlock">
+                                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding CoverPath}" Value="{x:Null}">
+                                                            <Setter Property="Visibility" Value="Visible"/>
+                                                        </DataTrigger>
+                                                        <DataTrigger Binding="{Binding CoverPath}" Value="">
+                                                            <Setter Property="Visibility" Value="Visible"/>
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </TextBlock.Style>
+                                        </TextBlock>
+                                    </Grid>
+                                 </Border>
 
                                 <StackPanel Grid.Row="1" Margin="0,10,0,0">
                                     <TextBlock Text="{Binding Title}" FontWeight="Bold" FontSize="14" TextWrapping="Wrap" MaxHeight="40" TextTrimming="CharacterEllipsis"/>
@@ -99,7 +99,6 @@
                                 </StackPanel>
 
                                 <StackPanel Grid.Row="2" Margin="0,10,0,0">
-                                    <!-- Выбор списка для добавления -->
                                     <ComboBox SelectedIndex="0" Margin="0,0,0,5" SelectionChanged="CbAddToList_SelectionChanged" Tag="{Binding Id}">
                                         <ComboBoxItem Content="В список..." IsEnabled="False"/>
                                         <ComboBoxItem Content="В планах"/>
@@ -115,7 +114,6 @@
                     </DataTemplate>
                 </ListView.ItemTemplate>
 
-                <!-- Убираем стандартное выделение ListView -->
                 <ListView.ItemContainerStyle>
                     <Style TargetType="ListViewItem">
                         <Setter Property="Focusable" Value="False"/>

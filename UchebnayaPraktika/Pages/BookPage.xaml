@@ -24,7 +24,7 @@
 
                     <StackPanel Grid.Column="1" Margin="20,0,0,0">
                         <TextBlock x:Name="TbTitle" FontWeight="Bold" FontSize="24" TextWrapping="Wrap"/>
-                        <TextBlock x:Name="TbAuthor" Foreground="DimGray" FontSize="16" Margin="0,5,0,10" FontStyle="Italic"/>
+                        <TextBlock x:Name="TbAuthor" Foreground="Black" FontSize="16" Margin="0,5,0,10" FontStyle="Italic"/>
 
                         <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
                             <TextBlock Text="Название:" FontWeight="Bold"/>
@@ -35,7 +35,7 @@
 
                         <StackPanel Orientation="Horizontal" Margin="0,0,0,15">
                             <TextBlock Text="Жанры: " FontWeight="Bold"/>
-                            <TextBlock x:Name="TbGenres" TextWrapping="Wrap" Foreground="#4A4A4A"/>
+                            <TextBlock x:Name="TbGenres" TextWrapping="Wrap" Foreground="Black"/>
                         </StackPanel>
 
                         <WrapPanel Margin="0,10,0,0">

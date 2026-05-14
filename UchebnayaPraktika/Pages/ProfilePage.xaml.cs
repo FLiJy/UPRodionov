@@ -35,7 +35,7 @@ namespace UchebnayaPraktika
             {
                 try
                 {
-                    // Собираем путь для локального файла
+                    // Путь для локального файла
                     string fullPath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, user.PhotoPath.TrimStart('/', '\\'));
                     if (System.IO.File.Exists(fullPath))
                     {

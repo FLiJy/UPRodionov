@@ -19,84 +19,30 @@ namespace UchebnayaPraktika
             _currentBook = book;
             this.DataContext = _currentBook;
 
-            // Загружаем данные (один раз, без дубликатов методов)
             LoadBookData();
             LoadReviews();
             CheckAdminRole();
         }
 
-        // ОСТАВЛЯЕМ ТОЛЬКО ОДНУ ВЕРСИЮ ЭТОГО МЕТОДА
 
-        //private void LoadBookData()
-        //{
-        //    if (Core.Context == null) return;
-
-        //    // Обновляем данные из БД для загрузки связей (Автора, Жанров)
-        //    _currentBook = Core.Context.Books.FirstOrDefault(b => b.Id == _currentBook.Id);
-        //    if (_currentBook == null) return;
-
-        //    // Заполнение текстовых полей
-        //    TbTitle.Text = _currentBook.Title;
-        //    TbDescription.Text = _currentBook.Description ?? "Описание отсутствует.";
-        //    TbAuthor.Text = _currentBook.Users?.DisplayName ?? "Неизвестный автор";
-
-        //    // Загрузка обложки
-        //    if (!string.IsNullOrWhiteSpace(_currentBook.CoverPath))
-        //    {
-        //        try
-        //        {
-        //            ImgBookCover.Source = new BitmapImage(new Uri(_currentBook.CoverPath, UriKind.RelativeOrAbsolute));
-        //        }
-        //        catch
-        //        {
-        //            ImgBookCover.Source = null;
-        //        }
-        //    }
-
-        //    // Текст книги
-        //    TbBookText.Text = string.IsNullOrWhiteSpace(_currentBook.Content)
-        //        ? "Текст произведения отсутствует."
-        //        : _currentBook.Content;
-
-        //    // Жанры
-        //    if (_currentBook.BookGenres != null)
-        //    {
-        //        var genres = _currentBook.BookGenres.Select(bg => bg.Genres.Name).ToList();
-        //        TbGenres.Text = genres.Any() ? string.Join(", ", genres) : "Не указаны";
-        //    }
-
-        //    // Рейтинг
-        //    if (_currentBook.Reviews != null && _currentBook.Reviews.Any())
-        //    {
-        //        TbRating.Text = _currentBook.Reviews.Average(r => r.Rating).ToString("F1");
-        //    }
-        //    else
-        //    {
-        //        TbRating.Text = "0.0";
-        //    }
-        //}
         private void LoadBookData()
         {
             if (Core.Context == null) return;
 
-            // Обновляем данные, чтобы подтянуть связи (Автора, Жанры)
             _currentBook = Core.Context.Books.FirstOrDefault(b => b.Id == _currentBook.Id);
             if (_currentBook == null) return;
 
-            // Текстовые поля
             TbTitle.Text = _currentBook.Title;
             TbDescription.Text = _currentBook.Description ?? "Описание отсутствует.";
             TbAuthor.Text = _currentBook.Users?.DisplayName ?? "Неизвестный автор";
             TbBookText.Text = string.IsNullOrWhiteSpace(_currentBook.Content) ? "Текст произведения отсутствует." : _currentBook.Content;
 
-            // Жанры
             if (_currentBook.BookGenres != null)
             {
                 var genres = _currentBook.BookGenres.Select(bg => bg.Genres.Name).ToList();
                 TbGenres.Text = genres.Any() ? string.Join(", ", genres) : "Не указаны";
             }
 
-            // Рейтинг
             if (_currentBook.Reviews != null && _currentBook.Reviews.Any())
             {
                 TbRating.Text = _currentBook.Reviews.Average(r => r.Rating).ToString("F1");
@@ -145,12 +91,10 @@ namespace UchebnayaPraktika
 
         private void BtnRead_Click(object sender, RoutedEventArgs e)
         {
-            // Берем актуальные данные из контекста страницы
             var book = this.DataContext as Books;
 
             if (book != null && !string.IsNullOrEmpty(book.Content))
             {
-                // Создаем и открываем отдельное окно ReadWindow
                 ReadWindow readWin = new ReadWindow(book.Content, book.Title);
                 readWin.Owner = Window.GetWindow(this);
                 readWin.ShowDialog();
@@ -205,7 +149,7 @@ namespace UchebnayaPraktika
             Core.Context.SaveChanges();
 
             TbNewReviewText.Clear();
-            LoadBookData(); // Обновляем рейтинг
+            LoadBookData(); 
             LoadReviews();
             MessageBox.Show("Отзыв успешно добавлен!", "Успех");
         }

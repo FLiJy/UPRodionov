@@ -17,7 +17,6 @@ namespace UchebnayaPraktika
         {
             if (Core.Context == null) return;
 
-            // Принудительно обновляем кэш EF, чтобы видеть свежие жалобы и заявки
             foreach (var entry in Core.Context.ChangeTracker.Entries().ToList())
             {
                 entry.Reload();
@@ -29,14 +28,14 @@ namespace UchebnayaPraktika
             DgUsers.ItemsSource = Core.Context.Users.ToList();
         }
 
-        // --- ЗАЯВКИ НА АВТОРА ---
+        // Заявки на получение роли автора
         private void BtnApproveAuthor_Click(object sender, RoutedEventArgs e)
         {
             if ((sender as Button)?.Tag is RoleRequests req)
             {
                 req.Status = "Approved";
 
-                // Ищем ID роли "Author". Если не найдет, ставим 2 по умолчанию
+                // Ищем id роли автор. Если не найдет, ставим 2 по умолчанию
                 var authorRole = Core.Context.Roles.FirstOrDefault(r => r.Name == "Author");
                 if (authorRole != null)
                 {
@@ -58,7 +57,7 @@ namespace UchebnayaPraktika
             }
         }
 
-        // --- ЖАЛОБЫ ---
+        // Сегмент жалоб
         private void BtnRejectComplaint_Click(object sender, RoutedEventArgs e)
         {
             if ((sender as Button)?.Tag is Complaints complaint)
@@ -73,19 +72,19 @@ namespace UchebnayaPraktika
         {
             if ((sender as Button)?.Tag is Complaints complaint)
             {
-                // Если жалоба на книгу - морозим книгу
+                // Если жалоба на книгу, то морозим книгу
                 if (complaint.BookId != null && complaint.Books != null)
                 {
                     complaint.Books.IsFrozen = true;
                 }
 
-                // Если жалоба на отзыв - удаляем отзыв (т.к. поля IsFrozen у него нет в БД)
+                // Если жалоба на отзыв, то удаляем отзыв 
                 if (complaint.ReviewId != null && complaint.Reviews != null)
                 {
                     Core.Context.Reviews.Remove(complaint.Reviews);
                 }
 
-                // Удаляем саму обработанную жалобу
+                // Удаляем обработанную жалобу
                 Core.Context.Complaints.Remove(complaint);
                 Core.Context.SaveChanges();
 
@@ -94,7 +93,7 @@ namespace UchebnayaPraktika
             }
         }
 
-        // --- РАЗМОРОЗКА ---
+        // Сегмент разморозки 
         private void BtnUnfreeze_Click(object sender, RoutedEventArgs e)
         {
             if ((sender as Button)?.Tag is UnfreezeRequests req)
@@ -118,12 +117,12 @@ namespace UchebnayaPraktika
             }
         }
 
-        // --- ПОЛЬЗОВАТЕЛИ ---
+        // Сегмент пользователей
         private void BtnResetPass_Click(object sender, RoutedEventArgs e)
         {
             if ((sender as Button)?.Tag is Users user)
             {
-                user.Password = "123"; // Простой сброс пароля
+                user.Password = "123"; // сброс пароля на 123
                 Core.Context.SaveChanges();
                 MessageBox.Show($"Пароль пользователя {user.Login} сброшен на '123'", "Сброс пароля");
             }
@@ -133,7 +132,7 @@ namespace UchebnayaPraktika
         {
             if ((sender as Button)?.Tag is Users user)
             {
-                // ЗАЩИТА: Нельзя менять роль самому себе
+                // Защита от смены роли самому себе
                 if (user.Id == Core.CurrentUser.Id)
                 {
                     MessageBox.Show("Вы не можете изменить роль самому себе!", "Внимание", MessageBoxButton.OK, MessageBoxImage.Warning);
@@ -156,7 +155,7 @@ namespace UchebnayaPraktika
         {
             if ((sender as Button)?.Tag is Users user)
             {
-                // ЗАЩИТА: Нельзя заморозить самого себя
+                // защита от заморозки самого себя
                 if (user.Id == Core.CurrentUser.Id)
                 {
                     MessageBox.Show("Вы не можете заморозить собственный аккаунт администратора!", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Stop);

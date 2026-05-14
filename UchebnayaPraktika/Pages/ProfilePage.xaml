@@ -13,13 +13,13 @@
 
             <Button Content="Сменить фото" Margin="0,10,0,20" Click="BtnChangePhoto_Click"/>
 
-            <Border Background="#FF6B6B" Padding="15" Margin="0,0,0,15" CornerRadius="5"
+            <Border Background="indianred" Padding="15" Margin="0,0,0,15" CornerRadius="5"
                     Visibility="{Binding IsFrozen, Converter={StaticResource VisibilityConverter}}">
                 <StackPanel>
                     <TextBlock Text="Ваш аккаунт заморожен администратором!" 
                                Foreground="White" FontWeight="Bold" HorizontalAlignment="Center" TextWrapping="Wrap"/>
                     <Button x:Name="BtnAppeal" Content="Подать апелляцию" Margin="0,10,0,0" 
-                            Height="30" Background="White" Foreground="#FF6B6B" FontWeight="Bold"
+                            Height="30" Background="White" Foreground="IndianRed" FontWeight="Bold"
                             Click="BtnAppeal_Click"/>
                 </StackPanel>
             </Border>
@@ -27,7 +27,7 @@
             <TextBlock Text="Ваше имя:" FontWeight="Bold"/>
             <TextBox x:Name="TbDisplayName" Width="250" Margin="0,5,0,15"/>
 
-            <Button Content="Сохранить изменения" Background="#2E8B57" Foreground="White" Height="30" Click="BtnSaveProfile_Click"/>
+            <Button Content="Сохранить изменения" Background="LimeGreen" Foreground="White" Height="30" Click="BtnSaveProfile_Click"/>
         </StackPanel>
     </Grid>
 </Page>

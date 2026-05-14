@@ -19,19 +19,17 @@ namespace UchebnayaPraktika
 
             if (book == null)
             {
-                // Если это новая книга
                 _currentBook = new Books();
-                _currentBook.IsFrozen = false; // Явно делаем её активной (не замороженной)
+                _currentBook.IsFrozen = false; 
             }
             else
             {
-                // Если редактируем существующую
                 _currentBook = book;
             }
 
             DataContext = _currentBook;
 
-            // Загрузка жанров в ComboBox (из предыдущего шага)
+            // Загрузка жанров  
             ComboGenres.ItemsSource = Core.Context.Genres.ToList();
 
             if (book != null)
@@ -39,7 +37,6 @@ namespace UchebnayaPraktika
                 TbTitle.Text = book.Title;
                 TbContent.Text = book.Content;
 
-                // Установка текущего жанра в ComboBox
                 var currentGenre = book.BookGenres.FirstOrDefault()?.Genres;
                 if (currentGenre != null)
                 {
@@ -69,7 +66,7 @@ namespace UchebnayaPraktika
 
         private void BtnSave_Click(object sender, RoutedEventArgs e)
         {
-            // Проверка заполнения
+            // проверка заполнения названия и жанра
             if (string.IsNullOrWhiteSpace(TbTitle.Text) || ComboGenres.SelectedItem == null)
             {
                 MessageBox.Show("Заполните название и выберите жанр!");
@@ -80,20 +77,19 @@ namespace UchebnayaPraktika
             _currentBook.Content = TbContent.Text;
             _currentBook.AuthorId = Core.CurrentUser.Id;
 
-            // Сохранение обложки
+            // Сохранение картинки на обложку книги
             if (_selectedFilePath != null)
             {
                 _currentBook.CoverPath = FileManager.SaveImage(_selectedFilePath, "Covers");
             }
 
-            // Если это новая книга
             if (_currentBook.Id == 0)
             {
-                _currentBook.IsFrozen = false; // Гарантируем статус "Активна"
+                _currentBook.IsFrozen = false; // Делает книгу "активной" в перечне своих книг
                 Core.Context.Books.Add(_currentBook);
             }
 
-            // Логика сохранения жанров (как делали раньше)
+            // Логика сохранения жанров 
             var selectedGenre = ComboGenres.SelectedItem as Genres;
             var existingGenres = Core.Context.BookGenres.Where(bg => bg.BookId == _currentBook.Id).ToList();
             if (existingGenres.Any()) Core.Context.BookGenres.RemoveRange(existingGenres);

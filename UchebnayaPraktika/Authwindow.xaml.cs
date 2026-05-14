@@ -43,7 +43,6 @@ namespace UchebnayaPraktika
             RegistrationWindow reg = new RegistrationWindow();
             reg.Show();
             this.Close();
-            MessageBox.Show("Здесь будет открываться окно регистрации.");
         }
     }
 }

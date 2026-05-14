@@ -16,10 +16,8 @@ namespace UchebnayaPraktika
 
         private void RefreshData()
         {
-            // Защита от падения при инициализации
             if (DgAuthorBooks == null || Core.Context == null || Core.CurrentUser == null) return;
 
-            // Принудительно обновляем кэш EF
             foreach (var entry in Core.Context.ChangeTracker.Entries().ToList())
             {
                 entry.Reload();
@@ -47,7 +45,7 @@ namespace UchebnayaPraktika
         {
             if ((sender as Button)?.Tag is Books book)
             {
-                // Проверяем, нет ли уже активной заявки
+                // Проверяем, нет ли активной заявки
                 bool alreadyAppealed = Core.Context.UnfreezeRequests
                     .Any(r => r.BookId == book.Id && r.UserId == Core.CurrentUser.Id);
 
